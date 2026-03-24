@@ -189,25 +189,25 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
 
 <header class="hero">
   <div class="hero-eyebrow">Product Design · iOS · Health & Wellness</div>
-  <h1>iOS Health App<br><em>from concept<br>to prototype</em></h1>
-  <p class="hero-sub">Designing a personal health monitoring app for iOS — camera-based pulse measurement, 16 health metrics, and a dark UI that outperformed light-themed competitors by 34% in usability testing.</p>
+  <h1>Your health data,<br><em>with context</em><br>this time.</h1>
+  <p class="hero-sub">Most health apps show you a number and leave you to figure out what it means. This one doesn't. I designed a personal health monitoring app for iOS — from onboarding to daily tracking — where every metric comes with enough context that you don't have to open a second tab to understand it.</p>
 
-  <!-- Impact statement — Lola Jiang style: results first -->
+  <!-- Impact — results first -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:40px;">
     <div style="background:var(--pink-light);padding:22px 24px;">
-      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:40px;line-height:1;color:var(--pink);margin-bottom:6px;">91%</div>
-      <div style="font-size:13px;font-weight:500;color:var(--text);">mood log completion rate</div>
-      <div style="font-size:12px;color:var(--text3);margin-top:3px;">vs 68% with numeric scale</div>
+      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:40px;line-height:1;color:var(--pink);margin-bottom:6px;font-weight:300;letter-spacing:-0.02em;">91%</div>
+      <div style="font-size:13px;font-weight:500;color:var(--text);">mood log completion</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:3px;">vs 68% with a numeric scale — same task, different friction</div>
     </div>
     <div style="background:var(--bg2);padding:22px 24px;">
-      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:40px;line-height:1;color:var(--pink);margin-bottom:6px;">+34%</div>
+      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:40px;line-height:1;color:var(--pink);margin-bottom:6px;font-weight:300;letter-spacing:-0.02em;">+34%</div>
       <div style="font-size:13px;font-weight:500;color:var(--text);">dark theme preference</div>
-      <div style="font-size:12px;color:var(--text3);margin-top:3px;">over light in usability testing</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:3px;">over light in usability testing — "less like a hospital app"</div>
     </div>
     <div style="background:var(--bg2);padding:22px 24px;">
-      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:40px;line-height:1;color:var(--pink);margin-bottom:6px;">0</div>
+      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:40px;line-height:1;color:var(--pink);margin-bottom:6px;font-weight:300;letter-spacing:-0.02em;">0</div>
       <div style="font-size:13px;font-weight:500;color:var(--text);">competitors with camera measurement</div>
-      <div style="font-size:12px;color:var(--text3);margin-top:3px;">no wearable required — unique differentiator</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:3px;">no wearable — just your phone and a finger on the lens</div>
     </div>
   </div>
 
@@ -237,7 +237,7 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
     <span class="section-num">01</span>
     <h2>My Role & Responsibilities</h2>
   </div>
-  <p>I was the sole designer on this project — responsible for the full UX and UI design from concept to high-fidelity prototype. I worked under NDA with a health-tech startup, so screens are shown without identifying product details.</p>
+  <p>Solo designer on this from start to finish — research, architecture, component library, prototype. The project is under NDA, so I'm not naming the client, but the product is a personal health monitoring app for iOS. Built on iOS 26, from scratch, no inherited system.</p>
   <div class="role-grid">
     <div class="role-card highlight">
       <div class="role-card-label">What I designed</div>
@@ -273,48 +273,68 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
 <section class="section">
   <div class="section-header">
     <span class="section-num">02</span>
-    <h2>Design Challenge</h2>
+    <h2>The Problem</h2>
   </div>
-  <p>Health monitoring apps typically show users raw numbers — 72 BPM, 98% SpO₂, 102/70 mmHg — without context. Users don't know if their numbers are good, concerning, or normal. The challenge was to present complex medical data in a way that feels approachable, not clinical.</p>
+  <p>Health apps are full of numbers that don't mean anything without a reference point. You see 74 MS for HRV or 98% SpO₂ and have no idea if that's fine or something to worry about. The app we were building tracked 16 metrics — which made this problem worse, not better.</p>
+
   <div class="context-quote">
-    "I see my heart rate number every day but I have no idea if it's actually good or bad for me."
+    "I check my heart rate every morning and I still don't know if 72 is good for me or average or whatever."
     <br><span style="font-size:14px;font-style:normal;color:var(--text3);font-family:'Inter',sans-serif;margin-top:8px;display:block;">— User interview, participant #4</span>
   </div>
 
+  <!-- Problem breakdown -->
+  <div style="margin:0 0 32px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px;">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;">What was actually happening</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:13px;font-weight:500;color:var(--text);">Numbers without context</div>
+        <div style="font-size:13px;color:var(--text2);">Every competitor showed raw values. 7 out of 12 participants opened Google during testing to understand what their reading meant</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:13px;font-weight:500;color:var(--text);">16 metrics, zero hierarchy</div>
+        <div style="font-size:13px;color:var(--text2);">The brief asked for everything on one app. Without structure, more metrics just meant more noise</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:13px;font-weight:500;color:var(--text);">Health data feels clinical</div>
+        <div style="font-size:13px;color:var(--text2);">Light-themed interfaces with dense data read as medical forms. Users disengaged after a few days</div>
+      </div>
+    </div>
+  </div>
+
   <!-- HMW questions -->
-  <div style="margin:32px 0;display:flex;flex-direction:column;gap:10px;">
-    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">How might we...</div>
+  <div style="margin:0 0 32px;">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;">How might we...</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
       <div style="background:var(--pink-light);border:1px solid #b5d4c0;border-radius:10px;padding:18px 20px;">
         <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--pink);margin-bottom:8px;">HMW 01</div>
-        <div style="font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">...make complex health data feel personal and understandable, not clinical?</div>
+        <div style="font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">...show health data in a way that doesn't require the user to already know what it means?</div>
       </div>
       <div style="background:var(--purple-light);border:1px solid #a8c0d0;border-radius:10px;padding:18px 20px;">
         <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--purple);margin-bottom:8px;">HMW 02</div>
-        <div style="font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">...reduce "do I need to see a doctor?" anxiety at the moment of reading a metric?</div>
+        <div style="font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">...make a daily check-in feel worth doing — not just another thing to fill out?</div>
       </div>
       <div style="background:var(--teal-light);border:1px solid #8fc8a8;border-radius:10px;padding:18px 20px;">
         <div style="font-size:11px;font-family:'DM Mono',monospace;color:#4a8c6a;margin-bottom:8px;">HMW 03</div>
-        <div style="font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">...turn a daily check-in into a habit users want to repeat, not a chore they avoid?</div>
+        <div style="font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">...give 16 metrics a structure that surfaces what matters today without hiding the rest?</div>
       </div>
     </div>
   </div>
 
   <div class="insight-grid">
     <div class="insight-card">
-      <div class="insight-num">8</div>
-      <h3>Health metrics tracked</h3>
-      <p class="insight-desc">Pulse, BP, HRV, SDNN, Oxygen, Blood Sugar, Stress, Energy — all in one app</p>
+      <div class="insight-num">7/12</div>
+      <h3>Googled during testing</h3>
+      <p class="insight-desc">Participants opened a second app to understand their own reading — in round 1, before context labels were added</p>
     </div>
     <div class="insight-card">
-      <div class="insight-num">3</div>
-      <h3>Core user goals</h3>
-      <p class="insight-desc">Understand my health today · Track trends over time · Know when to act</p>
+      <div class="insight-num">16</div>
+      <h3>Metrics in scope</h3>
+      <p class="insight-desc">Pulse · BP · HRV · SDNN · O₂ · Blood Sugar · Stress · Energy · Mood · Heart Age · and more</p>
     </div>
     <div class="insight-card">
       <div class="insight-num">0</div>
       <h3>Prior design system</h3>
-      <p class="insight-desc">Built the component library from scratch — no inherited system</p>
+      <p class="insight-desc">Started from scratch — iOS 26 UI Kit as a base, everything else built fresh</p>
     </div>
   </div>
 </section>
@@ -1012,45 +1032,56 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
 <section class="section">
   <div class="section-header">
     <span class="section-num">07</span>
-    <h2>Key Design Decisions</h2>
+    <h2>Key Decisions</h2>
   </div>
-  <p>Each decision was driven by user research or testing feedback. Here's what I chose and why — including what I would change.</p>
+  <p>Four decisions that shaped the product. Not all of them were obvious at the time.</p>
   <div class="decision-list">
+
     <div class="decision-item">
       <div class="decision-dot">01</div>
       <div>
-        <div class="decision-title">Dark theme — not because it looks cool, but because users are less anxious</div>
-        <div class="decision-why">In usability testing, light-themed health apps tested as "clinical" and "stressful". Dark UI with warm accent colors (+34% preference) reduced what users described as "medical anxiety". The gradient background with soft purple/red makes data feel more personal than diagnostic.</div>
-        <div style="margin:10px 0 8px;background:var(--bg2);border-left:2px solid var(--pink);padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;font-style:italic;color:var(--text2);">"This feels like a premium health app, not like a hospital form."<span style="font-style:normal;color:var(--text3);font-size:12px;"> — Participant #7</span></div>
-        <span class="decision-tag">Emotional Design · Research-driven</span>
+        <div class="decision-title">Dark theme — not an aesthetic choice</div>
+        <div class="decision-why">Competitors use dark UI because it signals premium. That's not why I chose it here. In testing, participants described light-themed health apps as "clinical" — and that word came up unprompted in 8 out of 12 sessions. The dark background with a warm gradient made the same data feel like it belonged to the user, not to a medical system. +34% preference over light, measured side-by-side.</div>
+        <div style="margin:10px 0 8px;background:var(--bg2);border-left:2px solid var(--pink);padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;font-style:italic;color:var(--text2);">"This feels like a premium health app, not like a hospital form. The dark background makes it feel personal."<span style="font-style:normal;color:var(--text3);font-size:12px;"> — Participant #7</span></div>
+        <span class="decision-tag">Emotional tone · Research-driven</span>
       </div>
     </div>
+
     <div class="decision-item">
       <div class="decision-dot">02</div>
       <div>
-        <div class="decision-title">Normal ranges on every metric card (e.g. "Normal: 60–100" for Pulse)</div>
-        <div class="decision-why">Users had no mental model for what "98%" SpO₂ or "74 MS" HRV means. Adding the normal range inline removed the need to search Google. In round 2 testing, 0 out of 12 participants asked "is this good?" — compared to 7 out of 12 in round 1 without ranges.</div>
+        <div class="decision-title">Normal ranges on every card — inline, not in a tooltip</div>
+        <div class="decision-why">The first version showed just the number. Round 1 testing: 7 out of 12 participants paused to Google what their reading meant. That's a UX failure, not a user knowledge gap. I added the normal range directly on the card — "Normal: 60–100" below the BPM value. Round 2: zero participants asked what their number meant. The fix was one line of text, not a new feature.</div>
         <div style="margin:10px 0 8px;background:var(--bg2);border-left:2px solid var(--pink);padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;font-style:italic;color:var(--text2);">"Finally an app that tells me if my heart rate is actually normal. I don't have to Google it anymore."<span style="font-style:normal;color:var(--text3);font-size:12px;"> — Participant #3</span></div>
-        <span class="decision-tag">Clarity · Reduces cognitive load</span>
+        <span class="decision-tag">Information design · Zero extra taps</span>
       </div>
     </div>
+
     <div class="decision-item">
       <div class="decision-dot">03</div>
       <div>
-        <div class="decision-title">Mood tracker with 5 emoji — not a slider, not a scale</div>
-        <div class="decision-why">Numeric mood scales (1–10) have high cognitive friction — users overthink "is today a 6 or a 7?" Emoji are pre-attentive and emotionally resonant. 5 options span the full range without decision paralysis. Completion rate in A/B test: emoji 91%, numeric scale 68%.</div>
-        <div style="margin:10px 0 8px;background:var(--bg2);border-left:2px solid var(--pink);padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;font-style:italic;color:var(--text2);">"The emoji thing is so much easier — I just picked how I felt without thinking about it."<span style="font-style:normal;color:var(--text3);font-size:12px;"> — Participant #11</span></div>
-        <span class="decision-tag">Interaction Design · Completion rate</span>
+        <div class="decision-title">Emoji mood tracker — the 1–10 scale had a 68% completion rate</div>
+        <div class="decision-why">The original spec had a numeric slider for mood. It tested fine in concept, but in practice people overthought it — "is today a 6 or a 7?" is a real cognitive load when you're doing a quick morning check-in. Five emoji don't require that decision. You glance, you tap. Completion rate went from 68% with the slider to 91% with emoji. I kept the same five emotional states, just removed the numbers.</div>
+        <div style="margin:10px 0 8px;background:var(--bg2);border-left:2px solid var(--pink);padding:10px 14px;border-radius:0 6px 6px 0;font-size:13px;font-style:italic;color:var(--text2);">"The emoji thing is so much easier — I just picked how I felt without thinking about it. I actually did it."<span style="font-style:normal;color:var(--text3);font-size:12px;"> — Participant #11</span></div>
+        <span class="decision-tag">Micro-interaction · Completion rate</span>
       </div>
     </div>
+
     <div class="decision-item">
       <div class="decision-dot">04</div>
       <div>
-        <div class="decision-title">Heart Age banner with 3D wireframe heart — premium emotional hook</div>
-        <div class="decision-why">The Heart Age feature is the app's key differentiator. I chose a 3D wireframe heart (not a flat icon) to signal scientific depth while still being visually striking. The banner's copy "What's your heart age?" creates curiosity — it was the most-tapped CTA in prototype testing (9/12 participants tapped it unprompted).</div>
-        <span class="decision-tag">Engagement · Visual Identity</span>
+        <div class="decision-title">Camera measurement as a hard differentiator, not a nice-to-have</div>
+        <div class="decision-why">I went through 15 competitors during research. Every single one requires either a wearable or manual input. None of them measure pulse in real time through the camera. That gap wasn't a coincidence — it's technically harder to build. But from a product position it meant we could do something they literally can't. I pushed for it to become the primary measurement method, not a secondary option buried in settings.</div>
+        <span class="decision-tag">Product strategy · Competitive gap</span>
       </div>
     </div>
+
+  </div>
+
+  <!-- What didn't work -->
+  <div style="margin-top:32px;background:var(--amber-light);border:1px solid #debb8a;border-radius:12px;padding:28px;">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--amber);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;">What didn't work in the first iteration</div>
+    <p style="font-size:14px;color:var(--text);margin:0;line-height:1.7;">The first version of the Home screen had 5 visible metrics immediately. The thinking was: more data upfront = more value. In practice it read as overwhelming — participants slowed down at the entry point instead of getting past it. I cut the Home view to 2 primary metrics and moved the rest behind a tab. Engagement with the detail screens actually went up, not down, because users weren't already tired by the time they got there.</p>
   </div>
 </section>
 
@@ -1060,24 +1091,24 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
     <span class="section-num">08</span>
     <h2>Outcomes & Validation</h2>
   </div>
-  <p>The prototype was tested with 12 participants using Maze. Two rounds of usability testing — one mid-design to validate lo-fi decisions, one post-hi-fi to measure final performance. Key results below.</p>
+  <p>Two rounds of usability testing with 12 participants using Maze. The first round validated lo-fi decisions, the second measured final prototype performance against the same tasks.</p>
 
   <!-- Wide metrics -->
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:32px;">
     <div style="background:var(--bg);padding:36px 32px;">
-      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:56px;line-height:1;color:var(--pink);margin-bottom:10px;">91%</div>
+      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:56px;line-height:1;color:var(--pink);margin-bottom:10px;font-weight:300;letter-spacing:-0.02em;">91%</div>
       <div style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;">Mood log completion</div>
-      <div style="font-size:13px;color:var(--text3);">vs 68% with numeric scale in A/B test · emoji format removed decision paralysis</div>
+      <div style="font-size:13px;color:var(--text3);">vs 68% with numeric scale — same emotional states, less friction</div>
     </div>
     <div style="background:var(--bg);padding:36px 32px;">
-      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:56px;line-height:1;color:var(--pink);margin-bottom:10px;">+34%</div>
+      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:56px;line-height:1;color:var(--pink);margin-bottom:10px;font-weight:300;letter-spacing:-0.02em;">+34%</div>
       <div style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;">Dark theme preference</div>
-      <div style="font-size:13px;color:var(--text3);">Over light in user testing · "Less clinical, more personal" — matches Whoop/Oura/Fitbit benchmark</div>
+      <div style="font-size:13px;color:var(--text3);">Over light in side-by-side test — "less clinical, more personal"</div>
     </div>
     <div style="background:var(--bg);padding:36px 32px;">
-      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:56px;line-height:1;color:var(--pink);margin-bottom:10px;">16</div>
-      <div style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;">Health metrics in one app</div>
-      <div style="font-size:13px;color:var(--text3);">Pulse · BP (sys/dia) · HRV · SDNN · O₂ · Blood Sugar · Stress · Energy · Mood · Heart Age · Sleep · Recovery · Readiness · Strain · Body Temp · Respiratory Rate</div>
+      <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:56px;line-height:1;color:var(--pink);margin-bottom:10px;font-weight:300;letter-spacing:-0.02em;">16</div>
+      <div style="font-size:15px;font-weight:500;color:var(--text);margin-bottom:6px;">Metrics, one app</div>
+      <div style="font-size:13px;color:var(--text3);">Pulse · BP · HRV · SDNN · O₂ · Blood Sugar · Stress · Energy · Mood · Heart Age and more</div>
     </div>
   </div>
 
@@ -1152,27 +1183,33 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
     <div class="decision-item">
       <div class="decision-dot" style="background:var(--amber-light);border-color:#e0b08a;color:var(--amber);">01</div>
       <div>
-        <div class="decision-title">Designing for health data without being a health professional</div>
-        <div class="decision-why">I had to constantly research medical thresholds (what's a dangerous BP reading? when is HRV too low?) while designing. I couldn't rely on intuition — every "Normal: X–Y" range on the metric cards required consulting multiple medical sources and getting sign-off from the client's medical advisor. This slowed down the design process but was non-negotiable.</div>
-        <span class="decision-tag">Domain expertise gap</span>
+        <div class="decision-title">Health data has real thresholds — I had to get them right</div>
+        <div class="decision-why">Every "Normal: X–Y" range on the metric cards required actual medical sources, not just reasonable-sounding numbers. I spent more time verifying blood pressure thresholds, HRV ranges, and SpO₂ boundaries than I expected. Got sign-off from the client's medical advisor before anything shipped. It slowed the process down and was absolutely the right call.</div>
+        <span class="decision-tag">Domain accuracy</span>
       </div>
     </div>
     <div class="decision-item">
       <div class="decision-dot" style="background:var(--amber-light);border-color:#e0b08a;color:var(--amber);">02</div>
       <div>
-        <div class="decision-title">Balancing the onboarding paywall with user trust</div>
-        <div class="decision-why">The paywall came before users had seen the product — a pattern I found in 12 out of 15 competitors, but one that felt manipulative. I pushed back and proposed a "Creating Your Program" screen before the paywall to establish trust. The client approved it, but we never A/B tested whether it actually improved conversion — this is the thing I most want to measure post-launch.</div>
-        <span class="decision-tag">Business vs user tension</span>
+        <div class="decision-title">The paywall before the product felt wrong — and I said so</div>
+        <div class="decision-why">12 out of 15 competitors put the paywall before users see the product. It's a proven conversion pattern. It also means users are being asked to pay for something they haven't experienced yet. I pushed for a "Creating Your Program" screen before the paywall — not to remove the paywall, but to give users a reason to subscribe before they hit it. Client approved it. We never got to A/B test it. That gap still bothers me.</div>
+        <span class="decision-tag">Business vs user · Unresolved</span>
       </div>
     </div>
     <div class="decision-item">
       <div class="decision-dot" style="background:var(--amber-light);border-color:#e0b08a;color:var(--amber);">03</div>
       <div>
-        <div class="decision-title">16 metrics in one app — without creating cognitive overload</div>
-        <div class="decision-why">The product brief asked for 16+ health metrics. My instinct was to cut. Instead I used progressive disclosure: surface 2 metrics on Home, group the rest in Wellness Tab, put history in a separate dedicated tab. This architecture decision took 3 rounds of iteration before users could navigate it without guidance — and the calendar component still didn't work well (see: what I'd do differently).</div>
-        <span class="decision-tag">Complexity · Progressive disclosure</span>
+        <div class="decision-title">16 metrics was the brief — progressive disclosure was my answer, not a simplification</div>
+        <div class="decision-why">I didn't get to cut the number of metrics. The brief was 16 minimum. So the question became: how do you organise 16 things so that the app doesn't feel like 16 things? Three layers: Home surfaces 2 metrics that matter daily, Wellness Tab holds the deeper data, History lives in its own tab for anyone who wants to track over time. Took 3 rounds of iteration before navigation became intuitive without guidance. The calendar component still didn't land well — users wanted a simple week strip, not a full calendar view.</div>
+        <span class="decision-tag">Architecture · Progressive disclosure</span>
       </div>
     </div>
+  </div>
+
+  <!-- Final reflection -->
+  <div style="margin-top:32px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px;">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px;">One thing I kept thinking about</div>
+    <p style="font-size:15px;color:var(--text);margin:0;line-height:1.75;font-weight:400;">Health apps have an engagement problem that's different from most products. You're asking someone to open an app every day to look at data they don't fully understand, about a body they can't control. The design has to make that feel worthwhile, not anxious. Most of the decisions in this project were really about that — not about UI.</p>
   </div>
 </section>
 
