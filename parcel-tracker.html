@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parcel Tracker App — Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500&family=Geist+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg2: #f5f5f7;
+    --bg3: #e8e8ed;
+    --text: #1d1d1f;
+    --text2: #6e6e73;
+    --text3: #aeaeb2;
+    --border: #d2d2d7;
+    --green: #3d7a5a;
+    --green2: #5a9e75;
+    --green3: #c8e6d4;
+    --green4: #eef7f2;
+    --orange: #f4821f;
+  }
+
+  html { scroll-behavior: smooth; color-scheme: light; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Geist', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 980px; margin: 0 auto; padding: 0 40px; }
+  @media (max-width: 600px) { .container { padding: 0 24px; } }
+
+  nav { padding: 20px 0; border-bottom: 1px solid var(--border); }
+  nav .container { display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-size: 13px; color: var(--text2); text-decoration: none; }
+  .nav-tag { font-size: 12px; color: var(--text3); }
+
+  /* ── HERO ── */
+  .hero { padding: 100px 0 80px; border-bottom: 1px solid var(--border); }
+  .eyebrow { font-size: 11px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Geist Mono', monospace; margin-bottom: 16px; }
+  h1 { font-size: clamp(36px, 5vw, 60px); font-weight: 200; letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 24px; }
+  .nda { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text3); border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px; margin-bottom: 24px; font-family: 'Geist Mono', monospace; }
+  .hero-sub { font-size: 18px; font-weight: 300; color: var(--text2); max-width: 560px; line-height: 1.7; margin-bottom: 56px; }
+  .hero-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
+  @media (max-width: 600px) { .hero-meta { grid-template-columns: 1fr 1fr; } }
+  .meta-item { padding: 20px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .meta-label { font-size: 11px; color: var(--text3); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+  .meta-value { font-size: 14px; color: var(--text); }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+  h2 { font-size: 32px; font-weight: 200; letter-spacing: -0.02em; margin-bottom: 20px; line-height: 1.15; }
+  p { font-size: 15px; font-weight: 300; color: var(--text2); line-height: 1.85; margin-bottom: 16px; max-width: 600px; }
+
+  /* ── PLATFORM PILLS ── */
+  .platforms { display: flex; gap: 8px; margin-top: 32px; margin-bottom: 40px; }
+  .platform-pill {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); border-radius: 24px;
+    padding: 8px 16px; font-size: 13px; color: var(--text2);
+  }
+  .platform-pill svg { width: 16px; height: 16px; }
+
+  /* ── UI SHOWCASE ── */
+  .ui-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  @media (max-width: 700px) { .ui-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) and (min-width: 700px) { .ui-grid { grid-template-columns: 1fr 1fr; } }
+
+  .ui-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .ui-card-label { font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Geist Mono', monospace; }
+
+  /* ── BUTTON COMPONENT ── */
+  .btn-showcase { display: flex; flex-direction: column; gap: 10px; }
+  .btn-primary {
+    background: var(--green);
+    color: #fff;
+    border: none; border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 15px; font-weight: 400;
+    font-family: 'Geist', sans-serif;
+    text-align: center;
+    cursor: default;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--green);
+    border: 1.5px solid var(--green);
+    border-radius: 12px;
+    padding: 13px 20px;
+    font-size: 15px; font-weight: 400;
+    font-family: 'Geist', sans-serif;
+    text-align: center;
+    cursor: default;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 20px;
+    font-size: 15px; font-weight: 400;
+    font-family: 'Geist', sans-serif;
+    text-align: center;
+    cursor: default;
+  }
+
+  /* ── TRACKING CARD ── */
+  .tracking-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+  }
+  .tracking-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+  .tracking-from { font-size: 11px; color: var(--text3); }
+  .tracking-status { font-size: 11px; font-weight: 500; }
+  .tracking-status.delivered { color: var(--green); }
+  .tracking-status.transit { color: var(--orange); }
+  .tracking-status.pending { color: var(--text3); }
+  .tracking-number { font-size: 13px; font-weight: 400; color: var(--text); margin-bottom: 12px; font-family: 'Geist Mono', monospace; }
+  .tracking-bar { height: 3px; background: var(--bg3); border-radius: 2px; margin-bottom: 4px; overflow: hidden; }
+  .tracking-fill { height: 100%; border-radius: 2px; }
+  .tracking-dots { display: flex; justify-content: space-between; }
+  .tracking-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+  /* ── STATUS BADGE ── */
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge {
+    font-size: 12px; font-weight: 400;
+    padding: 5px 12px; border-radius: 20px;
+    font-family: 'Geist', sans-serif;
+  }
+  .badge.green { background: var(--green4); color: var(--green); }
+  .badge.orange { background: #fff4ec; color: var(--orange); }
+  .badge.gray { background: var(--bg2); color: var(--text3); }
+  .badge.blue { background: #eef4ff; color: #3b6fd4; }
+  .badge.red { background: #fff0f0; color: #d43b3b; }
+
+  /* ── INPUT FIELD ── */
+  .input-showcase { display: flex; flex-direction: column; gap: 8px; }
+  .input-label { font-size: 12px; color: var(--text2); margin-bottom: 2px; }
+  .input-field {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14px; color: var(--text3);
+    font-family: 'Geist', monospace;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .input-field.active { border-color: var(--green); }
+  .input-cursor { width: 1.5px; height: 16px; background: var(--green); animation: blink 1s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .input-scan-btn {
+    background: var(--green4);
+    color: var(--green);
+    border: none; border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    font-family: 'Geist', sans-serif;
+    display: flex; align-items: center; gap: 6px;
+    cursor: default;
+  }
+
+  /* ── LIST ITEM ── */
+  .list-items { display: flex; flex-direction: column; gap: 1px; }
+  .list-item {
+    background: #fff;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+    border-radius: 0;
+  }
+  .list-item:first-child { border-radius: 12px 12px 0 0; }
+  .list-item:last-child { border-radius: 0 0 12px 12px; }
+  .list-item-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 16px;
+  }
+  .list-item-body { flex: 1; min-width: 0; }
+  .list-item-title { font-size: 13px; color: var(--text); font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .list-item-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .list-item-right { font-size: 11px; color: var(--text3); text-align: right; flex-shrink: 0; }
+  .list-item-right .status { font-size: 11px; font-weight: 500; margin-bottom: 2px; }
+
+  /* ── PROGRESS STEPPER ── */
+  .stepper { display: flex; align-items: center; gap: 0; }
+  .step-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0; position: relative; z-index: 1;
+  }
+  .step-line { flex: 1; height: 2px; }
+  .step-done .step-dot { background: var(--green); }
+  .step-done .step-line { background: var(--green); }
+  .step-active .step-dot { background: var(--green); box-shadow: 0 0 0 3px var(--green4); }
+  .step-active .step-line { background: var(--bg3); }
+  .step-pending .step-dot { background: var(--bg3); border: 1.5px solid var(--border); }
+  .step-pending .step-line { background: var(--bg3); }
+
+  /* ── TOGGLE ── */
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; }
+  .toggle-label { font-size: 13px; color: var(--text); }
+  .toggle {
+    width: 44px; height: 26px; border-radius: 13px;
+    position: relative; cursor: default;
+  }
+  .toggle.on { background: var(--green); }
+  .toggle.off { background: var(--bg3); }
+  .toggle-thumb {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #fff; position: absolute; top: 2px;
+    transition: left 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  }
+  .toggle.on .toggle-thumb { left: 20px; }
+  .toggle.off .toggle-thumb { left: 2px; }
+
+  /* ── PLAN CARD ── */
+  .plan-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+    border: 1.5px solid transparent;
+  }
+  .plan-card.selected { border-color: var(--green); background: var(--green4); }
+  .plan-badge { font-size: 10px; font-weight: 500; background: var(--orange); color: #fff; padding: 2px 7px; border-radius: 20px; margin-bottom: 4px; display: inline-block; }
+  .plan-name { font-size: 14px; font-weight: 400; color: var(--text); }
+  .plan-sub { font-size: 11px; color: var(--text3); }
+  .plan-price { text-align: right; }
+  .plan-amount { font-size: 20px; font-weight: 300; color: var(--text); letter-spacing: -0.02em; }
+  .plan-period { font-size: 11px; color: var(--text3); }
+  .plan-free { font-size: 13px; color: var(--green); font-weight: 500; }
+
+  /* ── SECTION COLS ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; gap: 28px; } }
+
+  /* ── PROCESS ── */
+  .process { margin-top: 40px; }
+  .p-step { display: grid; grid-template-columns: 44px 1fr; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+  .p-step:first-child { border-top: 1px solid var(--border); }
+  .p-num { font-size: 11px; color: var(--text3); font-family: 'Geist Mono', monospace; padding-top: 2px; }
+  .p-title { font-size: 15px; font-weight: 400; color: var(--text); margin-bottom: 4px; }
+  .p-desc { font-size: 13px; color: var(--text2); margin: 0; max-width: none; }
+
+  /* ── RESULTS ── */
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 40px; }
+  @media (max-width: 600px) { .results-grid { grid-template-columns: 1fr; } }
+  .result-card { background: var(--bg); padding: 28px; }
+  .result-n { font-size: 36px; font-weight: 200; letter-spacing: -0.03em; color: var(--text); margin-bottom: 4px; }
+  .result-l { font-size: 12px; color: var(--text3); margin-bottom: 8px; }
+  .result-d { font-size: 13px; color: var(--text2); }
+
+  /* ── COLOR SYSTEM ── */
+  .color-system { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 32px; }
+  @media (max-width: 600px) { .color-system { grid-template-columns: repeat(3, 1fr); } }
+  .color-item { display: flex; flex-direction: column; gap: 6px; }
+  .color-swatch { height: 48px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.06); }
+  .color-name { font-size: 10px; color: var(--text3); font-family: 'Geist Mono', monospace; }
+  .color-hex { font-size: 10px; color: var(--text3); font-family: 'Geist Mono', monospace; }
+
+  footer { padding: 40px 0; }
+  footer .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  footer p { font-size: 11px; color: var(--text3); font-family: 'Geist Mono', monospace; margin: 0; max-width: none; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  .hero > * { animation: fadeUp 0.45s ease both; }
+  .hero .eyebrow { animation-delay: 0.05s; }
+  .hero h1 { animation-delay: 0.1s; }
+  .hero .nda { animation-delay: 0.13s; }
+  .hero .hero-sub { animation-delay: 0.16s; }
+  .hero .hero-meta { animation-delay: 0.2s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="index.html" class="nav-logo">← Anna · Product Designer</a>
+    <span class="nav-tag">Case study</span>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="container">
+    <div class="eyebrow">iOS · Android · 0 → 1 · 2025</div>
+    <h1>Parcel Tracker<br>App Design</h1>
+    <div class="nda">🔒 Under NDA — full screens not shown</div>
+    <p class="hero-sub">Designed a cross-platform parcel tracking app from scratch — iOS and Android. Full 0→1 product design: architecture, component system, and all user flows.</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="meta-label">Platform</div>
+        <div class="meta-value">iOS · Android</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Scope</div>
+        <div class="meta-value">0 → 1 product</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Role</div>
+        <div class="meta-value">Lead Designer</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Deliverable</div>
+        <div class="meta-value">Full design system</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="eyebrow">01 · Color System</div>
+    <h2>Built around<br>trust and clarity.</h2>
+    <p>A green-dominant palette anchored in reliability and action. Status colors communicate parcel states at a glance — no reading required.</p>
+    <div class="color-system">
+      <div class="color-item">
+        <div class="color-swatch" style="background:#3d7a5a"></div>
+        <div class="color-name">Primary</div>
+        <div class="color-hex">#3d7a5a</div>
+      </div>
+      <div class="color-item">
+        <div class="color-swatch" style="background:#5a9e75"></div>
+        <div class="color-name">Secondary</div>
+        <div class="color-hex">#5a9e75</div>
+      </div>
+      <div class="color-item">
+        <div class="color-swatch" style="background:#c8e6d4"></div>
+        <div class="color-name">Soft</div>
+        <div class="color-hex">#c8e6d4</div>
+      </div>
+      <div class="color-item">
+        <div class="color-swatch" style="background:#f4821f"></div>
+        <div class="color-name">Action</div>
+        <div class="color-hex">#f4821f</div>
+      </div>
+      <div class="color-item">
+        <div class="color-swatch" style="background:#1d1d1f"></div>
+        <div class="color-name">Text</div>
+        <div class="color-hex">#1d1d1f</div>
+      </div>
+      <div class="color-item">
+        <div class="color-swatch" style="background:#f5f5f7; border-color:#e0ddd8"></div>
+        <div class="color-name">Surface</div>
+        <div class="color-hex">#f5f5f7</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="eyebrow">02 · UI Components</div>
+    <h2>Pieces of the<br>design system.</h2>
+    <p>Individual components shown in isolation. Full screens are under NDA — these fragments illustrate the visual language and interaction patterns.</p>
+
+    <div class="ui-grid">
+
+      <!-- Buttons -->
+      <div class="ui-card">
+        <div class="ui-card-label">Buttons</div>
+        <div class="btn-showcase">
+          <div class="btn-primary">Continue</div>
+          <div class="btn-secondary">Use copied tracking code</div>
+          <div class="btn-ghost">Skip</div>
+        </div>
+      </div>
+
+      <!-- Tracking card -->
+      <div class="ui-card">
+        <div class="ui-card-label">Parcel card</div>
+        <div class="tracking-card">
+          <div class="tracking-top">
+            <span class="tracking-from">From: Moscow</span>
+            <span class="tracking-status delivered">Delivered</span>
+          </div>
+          <div class="tracking-number">FC756949649673</div>
+          <div style="margin-bottom:8px">
+            <div class="stepper">
+              <div class="step-done"><div class="step-dot"></div></div>
+              <div class="step-done"><div class="step-line"></div></div>
+              <div class="step-done"><div class="step-dot"></div></div>
+              <div class="step-done"><div class="step-line"></div></div>
+              <div class="step-active"><div class="step-dot"></div></div>
+              <div class="step-active"><div class="step-line"></div></div>
+              <div class="step-pending"><div class="step-dot"></div></div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:var(--text3);text-align:right">9 at 1:13 am</div>
+        </div>
+        <div class="tracking-card">
+          <div class="tracking-top">
+            <span class="tracking-from">From: Moscow</span>
+            <span class="tracking-status transit">Pick up</span>
+          </div>
+          <div class="tracking-number">FC756967649673</div>
+          <div style="margin-bottom:8px">
+            <div class="stepper">
+              <div class="step-done"><div class="step-dot"></div></div>
+              <div class="step-done"><div class="step-line"></div></div>
+              <div class="step-active"><div class="step-dot"></div></div>
+              <div class="step-active"><div class="step-line"></div></div>
+              <div class="step-pending"><div class="step-dot"></div></div>
+              <div class="step-pending"><div class="step-line"></div></div>
+              <div class="step-pending"><div class="step-dot"></div></div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:var(--text3);text-align:right">9 at 1:13 am</div>
+        </div>
+      </div>
+
+      <!-- Status badges -->
+      <div class="ui-card">
+        <div class="ui-card-label">Status badges</div>
+        <div class="badge-row">
+          <span class="badge green">Delivered</span>
+          <span class="badge orange">Pick up</span>
+          <span class="badge blue">In transit</span>
+          <span class="badge gray">Pending</span>
+          <span class="badge red">Returned</span>
+          <span class="badge orange">Delivery today</span>
+        </div>
+      </div>
+
+      <!-- Input field -->
+      <div class="ui-card">
+        <div class="ui-card-label">Input · tracking number</div>
+        <div class="input-showcase">
+          <div class="input-label">Tracking Number</div>
+          <div class="input-field active">
+            <span style="color:var(--text3)">Enter the tracking number...</span>
+            <div class="input-cursor"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text3)">
+            <div style="flex:1;height:1px;background:var(--border)"></div>
+            OR
+            <div style="flex:1;height:1px;background:var(--border)"></div>
+          </div>
+          <div class="input-scan-btn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="4" height="4" rx="1" stroke="#3d7a5a" stroke-width="1.5"/><rect x="11" y="1" width="4" height="4" rx="1" stroke="#3d7a5a" stroke-width="1.5"/><rect x="1" y="11" width="4" height="4" rx="1" stroke="#3d7a5a" stroke-width="1.5"/><path d="M11 11h4M13 11v4M11 13h2" stroke="#3d7a5a" stroke-width="1.5" stroke-linecap="round"/></svg>
+            Use copied tracking code
+          </div>
+        </div>
+      </div>
+
+      <!-- Subscription plans -->
+      <div class="ui-card">
+        <div class="ui-card-label">Paywall · plan cards</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="plan-card selected">
+            <div>
+              <div class="plan-badge">SAVE 8%</div>
+              <div class="plan-name">Annual Plan</div>
+              <div class="plan-sub">$2.9 per week</div>
+            </div>
+            <div class="plan-price">
+              <div class="plan-amount">$115</div>
+              <div class="plan-period">per year</div>
+            </div>
+          </div>
+          <div class="plan-card">
+            <div>
+              <div class="plan-name">Weekly Plan</div>
+              <div class="plan-sub">1 day trial, $1.99 per week</div>
+            </div>
+            <div class="plan-free">FREE 🟠</div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0">
+            <span style="font-size:13px;color:var(--text)">Free Trial Enabled</span>
+            <div class="toggle on"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toggles & settings -->
+      <div class="ui-card">
+        <div class="ui-card-label">Settings · toggles</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="toggle-row">
+            <span class="toggle-label">Push notifications</span>
+            <div class="toggle on"><div class="toggle-thumb"></div></div>
+          </div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div class="toggle-row">
+            <span class="toggle-label">Email updates</span>
+            <div class="toggle off"><div class="toggle-thumb"></div></div>
+          </div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div class="toggle-row">
+            <span class="toggle-label">Auto-detect carrier</span>
+            <div class="toggle on"><div class="toggle-thumb"></div></div>
+          </div>
+          <div style="height:1px;background:var(--border)"></div>
+          <div class="toggle-row">
+            <span class="toggle-label">Dark mode</span>
+            <div class="toggle off"><div class="toggle-thumb"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="eyebrow">03 · Process</div>
+    <h2>0 → 1 in steps.</h2>
+    <div class="process">
+      <div class="p-step">
+        <span class="p-num">01</span>
+        <div>
+          <div class="p-title">User research — parcel anxiety</div>
+          <p class="p-desc">Users track parcels multiple times a day out of anxiety, not necessity. The app needed to reduce that loop — clear status, proactive notifications.</p>
+        </div>
+      </div>
+      <div class="p-step">
+        <span class="p-num">02</span>
+        <div>
+          <div class="p-title">Information architecture</div>
+          <p class="p-desc">Mapped all user flows: add parcel, track status, manage archive, subscribe. Defined the tab structure and navigation hierarchy for both platforms.</p>
+        </div>
+      </div>
+      <div class="p-step">
+        <span class="p-num">03</span>
+        <div>
+          <div class="p-title">Design system built in Figma</div>
+          <p class="p-desc">Built a token-based system from scratch — colors, spacing, typography, component states. Separate files for iOS (HIG) and Android (Material 3).</p>
+        </div>
+      </div>
+      <div class="p-step">
+        <span class="p-num">04</span>
+        <div>
+          <div class="p-title">All screens — 2 platforms × 2 modes</div>
+          <p class="p-desc">Designed every screen in light and dark mode for both iOS and Android. Followed platform conventions while keeping visual language consistent.</p>
+        </div>
+      </div>
+      <div class="p-step">
+        <span class="p-num">05</span>
+        <div>
+          <div class="p-title">Paywall and subscription UX</div>
+          <p class="p-desc">Designed the monetization flow — free trial toggle, annual vs weekly plans, paywall placement triggered by parcel discovery moment.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="border-bottom:none">
+  <div class="container">
+    <div class="eyebrow">04 · Deliverables</div>
+    <h2>What was<br>delivered.</h2>
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-n">2</div>
+        <div class="result-l">Platforms</div>
+        <div class="result-d">Full iOS and Android design, following platform-specific guidelines</div>
+      </div>
+      <div class="result-card">
+        <div class="result-n">2</div>
+        <div class="result-l">Color modes</div>
+        <div class="result-d">Complete light and dark mode for every screen on both platforms</div>
+      </div>
+      <div class="result-card">
+        <div class="result-n">1k+</div>
+        <div class="result-l">Carriers supported</div>
+        <div class="result-d">Auto-detect carrier from tracking number — no manual selection</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Anna · Product Designer · 2026</p>
+    <p>Under NDA — full screens not shown</p>
+  </div>
+</footer>
+
+</body>
+</html>
