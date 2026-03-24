@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Tokens Automation — Anna Missandei</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #f0eff7;
+    --text2: #8a8a9a;
+    --text3: #4a4a5a;
+    --accent: #a78bfa;
+    --accent2: #7c3aed;
+    --green: #4ade80;
+    --amber: #fbbf24;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── GRID LINES ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(167,139,250,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(167,139,250,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── NAV ── */
+  nav {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+  nav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Geist', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text2);
+    
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .nav-badge {
+    font-size: 11px;
+    color: var(--accent);
+    border: 1px solid rgba(167,139,250,0.3);
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 100px 0 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hero-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Geist', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+    color: var(--text);
+  }
+  h1 span { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 15px;
+    color: var(--text2);
+    max-width: 560px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-size: 10px; color: var(--text3);  text-transform: uppercase; }
+  .meta-value { font-size: 13px; color: var(--text); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent) 0%, transparent 60%);
+    margin: 0;
+    opacity: 0.3;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── SECTION ── */
+  section {
+    padding: 72px 0;
+    position: relative;
+    z-index: 1;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Geist', sans-serif;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: var(--text);
+  }
+
+  p {
+    color: var(--text2);
+    font-size: 14px;
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+  /* ── PROBLEM CARDS ── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  @media (max-width: 600px) { .problem-grid { grid-template-columns: 1fr; } }
+
+  .problem-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .problem-card:hover { border-color: var(--border2); }
+  .problem-card .icon { font-size: 20px; margin-bottom: 12px; }
+  .problem-card h3 {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .problem-card p { font-size: 12px; margin: 0; }
+
+  /* ── FLOW ── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 32px;
+  }
+  .flow-step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .flow-step:last-child { border-bottom: none; }
+  .flow-num {
+    font-size: 11px;
+    color: var(--accent);
+    min-width: 28px;
+    padding-top: 2px;
+    font-family: 'Geist', sans-serif;
+  }
+  .flow-content h3 {
+    font-family: 'Geist', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .flow-content p { font-size: 12px; margin: 0; }
+
+  /* ── CODE BLOCK ── */
+  .code-block {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 32px 0;
+  }
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .code-dots { display: flex; gap: 6px; }
+  .code-dots span {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .code-dots span:nth-child(1) { background: #ff5f57; }
+  .code-dots span:nth-child(2) { background: #febc2e; }
+  .code-dots span:nth-child(3) { background: #28c840; }
+  .code-filename { font-size: 11px; color: var(--text3); }
+  .code-body {
+    padding: 20px;
+    font-size: 12px;
+    line-height: 1.8;
+    overflow-x: auto;
+  }
+  .code-body .k { color: #c084fc; }
+  .code-body .s { color: #86efac; }
+  .code-body .c { color: var(--text3); }
+  .code-body .v { color: #fde68a; }
+  .code-body .p { color: var(--text2); }
+
+  /* ── RESULT CHIPS ── */
+  .results {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .result-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .result-icon { font-size: 16px; flex-shrink: 0; }
+  .result-text { font-size: 13px; color: var(--text); }
+  .result-text span { color: var(--text2); font-size: 12px; display: block; margin-top: 2px; }
+
+  /* ── STACK ── */
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .stack-item {
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    letter-spacing: 0.05em;
+  }
+  .stack-item.highlight {
+    background: rgba(167,139,250,0.1);
+    border-color: rgba(167,139,250,0.3);
+    color: var(--accent);
+  }
+
+  /* ── DIFF PREVIEW ── */
+  .diff-preview {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 32px;
+  }
+  .diff-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .diff-title {
+    font-family: 'Geist', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .diff-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .diff-count { font-size: 11px; color: var(--accent); background: rgba(167,139,250,0.1); padding: 3px 8px; border-radius: 20px; }
+  .diff-rows { padding: 12px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .diff-row-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 10px; border-radius: 8px; font-size: 12px;
+  }
+  .diff-row-item.added { background: rgba(74,222,128,0.06); border: 1px solid rgba(74,222,128,0.15); }
+  .diff-row-item.changed { border: 1px solid rgba(255,255,255,0.08); }
+  .diff-sign { font-weight: 500; min-width: 10px; }
+  .diff-sign.plus { color: var(--green); }
+  .diff-sign.tilde { color: var(--amber); }
+  .diff-name { flex: 1; color: var(--text); }
+  .color-circle { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; }
+  .diff-hex { color: var(--text3); font-size: 11px; }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 80px 0;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-box {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 16px;
+    padding: 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-box::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-box h2 {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+  .cta-box p {
+    max-width: 420px;
+    margin: 0 auto 32px;
+  }
+  .cta-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .cta-btn {
+    font-family: 'Geist', sans-serif;
+    font-size: 13px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .cta-btn.primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    font-weight: 500;
+  }
+  .cta-btn.primary:hover { background: #c4b5fd; }
+  .cta-btn.secondary {
+    border: 1px solid var(--border2);
+    color: var(--text2);
+  }
+  .cta-btn.secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+  footer .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer p { font-size: 11px; color: var(--text3); margin: 0; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero > * { animation: fadeUp 0.6s ease both; }
+  .hero .hero-label { animation-delay: 0.1s; }
+  .hero h1         { animation-delay: 0.2s; }
+  .hero .hero-desc  { animation-delay: 0.3s; }
+  .hero .hero-meta  { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="#" class="nav-logo">Anna · Design Systems</a>
+    <span class="nav-badge">Available for freelance</span>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="container">
+    <div class="hero-label">Case study · Design Infrastructure</div>
+    <h1>Figma → GitHub<br><span>Token Sync</span><br>Automation</h1>
+    <p class="hero-desc">Built a Figma plugin that reads design tokens directly from Variables, shows a visual diff of what changed, and creates a Pull Request in GitHub — all in one click. No developers involved until review.</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">Designer + Builder</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Stack</span>
+        <span class="meta-value">Figma API · Node.js · GitHub</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Type</span>
+        <span class="meta-value">Design Infrastructure</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Impact</span>
+        <span class="meta-value">Zero manual handoff</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<section>
+  <div class="container">
+    <div class="section-num">01 / Problem</div>
+    <h2>The handoff loop that wastes everyone's time</h2>
+    <p>Every time a color or spacing token changed in Figma, the process was the same: screenshot the value, paste it in Slack, wait for a developer to update the codebase, hope nothing breaks in production.</p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="icon">🔁</div>
+        <h3>Manual sync</h3>
+        <p>Designers copy hex values into Slack. Developers re-type them into code. Errors happen constantly.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon">❓</div>
+        <h3>No change history</h3>
+        <p>Nobody knows what changed, when, or why. Production bugs traced back to "someone updated a color."</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon">⏳</div>
+        <h3>Delayed updates</h3>
+        <p>Token changes sit in Slack for days before a dev has bandwidth to implement them.</p>
+      </div>
+      <div class="problem-card">
+        <div class="icon">🔀</div>
+        <h3>Diverged sources of truth</h3>
+        <p>Figma says one thing. The codebase says another. Nobody is sure which is correct.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-num">02 / Solution</div>
+    <h2>One button. Figma to GitHub.</h2>
+    <p>A custom Figma plugin that reads all Variables directly from the file, compares them to the last pushed state, and creates a Pull Request with a visual diff table — automatically.</p>
+
+    <div class="diff-preview">
+      <div class="diff-header">
+        <div class="diff-title">
+          <div class="diff-dot"></div>
+          Push Tokens to GitHub
+        </div>
+        <div class="diff-count">+3 changes</div>
+      </div>
+      <div class="diff-rows">
+        <div class="diff-row-item added">
+          <span class="diff-sign plus">+</span>
+          <span class="diff-name">accent/tertiary</span>
+          <div class="color-circle" style="background:#d4e8e0"></div>
+          <span class="diff-hex">#d4e8e0</span>
+        </div>
+        <div class="diff-row-item changed">
+          <span class="diff-sign tilde">~</span>
+          <span class="diff-name">accent/primary</span>
+          <div class="color-circle" style="background:#6b9e8a"></div>
+          <span style="color:#4a4a5a;font-size:10px;padding:0 2px">→</span>
+          <div class="color-circle" style="background:#7db5a0"></div>
+          <span class="diff-hex">#7db5a0</span>
+        </div>
+        <div class="diff-row-item changed">
+          <span class="diff-sign tilde">~</span>
+          <span class="diff-name">text/primary</span>
+          <div class="color-circle" style="background:#1a1a2e"></div>
+          <span style="color:#4a4a5a;font-size:10px;padding:0 2px">→</span>
+          <div class="color-circle" style="background:#2d3436"></div>
+          <span class="diff-hex">#2d3436</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-step">
+        <span class="flow-num">01</span>
+        <div class="flow-content">
+          <h3>Designer updates tokens in Figma Variables</h3>
+          <p>Colors, spacing, typography — any variable type is supported.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">02</span>
+        <div class="flow-content">
+          <h3>Opens plugin → clicks "Scan tokens"</h3>
+          <p>Plugin reads all Variables directly via Figma Plugin API and shows a visual diff against the last pushed state.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">03</span>
+        <div class="flow-content">
+          <h3>Clicks "Create PR on GitHub"</h3>
+          <p>Plugin pushes design-tokens.json to a new branch and opens a Pull Request with an auto-generated change table.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">04</span>
+        <div class="flow-content">
+          <h3>Developer reviews and merges</h3>
+          <p>PR shows exactly what changed, from what value to what. One click merge — tokens are live in production.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-num">03 / Output</div>
+    <h2>What gets generated</h2>
+    <p>The plugin exports three files that developers can use immediately in any stack — no additional tooling required.</p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <span class="code-filename">design-tokens.json</span>
+      </div>
+      <div class="code-body" style="font-family:'Geist',monospace"><pre><span class="p">{</span>
+  <span class="k">"tokens"</span><span class="p">: {</span>
+    <span class="k">"accent/primary"</span><span class="p">: {</span>
+      <span class="k">"$value"</span><span class="p">:</span> <span class="s">"#7db5a0"</span><span class="p">,</span>
+      <span class="k">"$type"</span><span class="p">:</span>  <span class="s">"color"</span><span class="p">,</span>
+      <span class="k">"$modes"</span><span class="p">: {</span>
+        <span class="k">"light"</span><span class="p">:</span> <span class="s">"#7db5a0"</span><span class="p">,</span>
+        <span class="k">"dark"</span><span class="p">:</span>  <span class="s">"#5a9e89"</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></pre></div>
+    </div>
+
+    <div class="stack">
+      <span class="stack-item highlight">design-tokens.json</span>
+      <span class="stack-item highlight">design-tokens-flat.json</span>
+      <span class="stack-item highlight">tokens.css</span>
+      <span class="stack-item">React / Next.js ready</span>
+      <span class="stack-item">SCSS compatible</span>
+      <span class="stack-item">TypeScript typed</span>
+      <span class="stack-item">iOS / Android exportable</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-num">04 / Results</div>
+    <h2>What changed for the team</h2>
+    <div class="results">
+      <div class="result-row">
+        <span class="result-icon">⚡</span>
+        <div class="result-text">
+          Token updates go live in minutes, not days
+          <span>Previously required async Slack coordination and manual dev implementation</span>
+        </div>
+      </div>
+      <div class="result-row">
+        <span class="result-icon">🔍</span>
+        <div class="result-text">
+          Every change is tracked with full history in GitHub
+          <span>Pull Requests show exactly what changed, from which value to which</span>
+        </div>
+      </div>
+      <div class="result-row">
+        <span class="result-icon">🤝</span>
+        <div class="result-text">
+          Designer owns the token pipeline end-to-end
+          <span>No developer needed until final review and merge</span>
+        </div>
+      </div>
+      <div class="result-row">
+        <span class="result-icon">🔒</span>
+        <div class="result-text">
+          Main branch protected — all changes require PR review
+          <span>GitHub branch protection rules prevent accidental direct pushes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="border-bottom:none">
+  <div class="container">
+    <div class="section-num">05 / Stack</div>
+    <h2>Built with</h2>
+    <p>Everything was built from scratch without third-party token tools — just Figma Plugin API, GitHub REST API, and Node.js.</p>
+    <div class="stack">
+      <span class="stack-item highlight">Figma Plugin API</span>
+      <span class="stack-item highlight">GitHub REST API</span>
+      <span class="stack-item highlight">Node.js</span>
+      <span class="stack-item highlight">figma.clientStorage</span>
+      <span class="stack-item">GitHub Actions</span>
+      <span class="stack-item">Branch protection rules</span>
+      <span class="stack-item">Pull Requests</span>
+      <span class="stack-item">CSS Custom Properties</span>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Need this for<br><span style="color:var(--accent)">your team?</span></h2>
+      <p>I build design infrastructure that bridges Figma and code — tokens, systems, automation, handoff tooling.</p>
+      <div class="cta-links">
+        <a href="https://contra.com" class="cta-btn primary">Hire on Contra</a>
+        <a href="https://upwork.com" class="cta-btn secondary">Find me on Upwork</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p>Anna Missandei · Design Systems · 2026</p>
+    <p style="color:var(--text3)">Built with Figma Plugin API + GitHub REST API</p>
+  </div>
+</footer>
+
+</body>
+</html>
