@@ -1035,6 +1035,26 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
     <h2>Key Decisions</h2>
   </div>
   <p>Four decisions that shaped the product. Not all of them were obvious at the time.</p>
+
+  <!-- Hard calls — stated plainly -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:36px;">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px 22px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Hard call 01</div>
+      <div style="font-size:15px;font-weight:500;color:var(--text);line-height:1.5;">I removed the calendar from the primary navigation.</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:8px;line-height:1.6;">The client wanted it. Users in testing ignored it. I moved it to a detail view inside History and put a week strip on Home instead. Nobody complained after the change.</div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px 22px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Hard call 02</div>
+      <div style="font-size:15px;font-weight:500;color:var(--text);line-height:1.5;">I decided to ignore the competitor pattern for onboarding.</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:8px;line-height:1.6;">12 out of 15 apps hit the paywall before the user sees anything. It converts, but it also means you're asking for money before trust. I designed an alternative — and took the argument to the client.</div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px 22px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">Hard call 03</div>
+      <div style="font-size:15px;font-weight:500;color:var(--text);line-height:1.5;">I prioritized reducing decisions over adding features.</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:8px;line-height:1.6;">The brief had 6 more screens scoped. I argued to cut 4 of them. Not because they were bad ideas — because each one added a choice point to the daily flow. We shipped 5 tabs instead of 9.</div>
+    </div>
+  </div>
+
   <div class="decision-list">
 
     <div class="decision-item">
@@ -1085,7 +1105,63 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
   </div>
 </section>
 
-<!-- 07 OUTCOMES -->
+<!-- CONFLICT -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num" style="color:var(--amber);">—</span>
+    <h2>One conflict worth naming</h2>
+  </div>
+  <p>The product team wanted the Heart Age feature as a secondary screen — a detail view you'd navigate to deliberately. I thought it should be the first thing you see on Home.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:28px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Their argument</div>
+      <p style="font-size:14px;color:var(--text2);margin:0;line-height:1.65;">Heart Age is a calculated metric — it needs more explanation, more context, more trust-building before the user cares about it. Show it later, once they're invested in the app.</p>
+    </div>
+    <div style="background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:12px;padding:28px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">My argument</div>
+      <p style="font-size:14px;color:var(--text2);margin:0;line-height:1.65;">It's the only thing in this app that no competitor offers. If it's buried, we've designed around our own differentiator. The banner format lets it exist on Home without dominating — it's visible but not blocking.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;">
+    <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">What happened</div>
+    <p style="font-size:14px;color:var(--text);margin:0;line-height:1.65;">We tested both versions. Heart Age on Home got tapped unprompted by 9 out of 12 participants — more than any other element. The product team agreed to keep it. It's not always about being right. It's about having something to show.</p>
+  </div>
+</section>
+
+<!-- KILLER INSIGHT -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-num">↗</span>
+    <h2>The thing that changed the direction</h2>
+  </div>
+
+  <div style="background:var(--text);border-radius:14px;padding:36px 40px;margin-bottom:32px;">
+    <p style="font-size:22px;color:var(--bg);line-height:1.5;font-weight:300;letter-spacing:-0.01em;margin:0;">Users didn't need more features.<br>They needed fewer decisions.</p>
+  </div>
+
+  <p>This came from round 1 testing. I was watching someone use the V1 prototype — they had everything they asked for in research, but they kept hesitating. Not because they were confused about the UI. Because every screen was asking them to decide something.</p>
+  <p>What metric to check first. Whether to log their mood now or later. Whether the number they were looking at was good or bad. Whether to explore the data or close the app. The design wasn't broken. It just required too much active thinking for something people were doing at 8am before coffee.</p>
+
+  <div style="margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">How I applied it</div>
+      <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;">Home shows 2 metrics, not 5</div>
+      <div style="font-size:13px;color:var(--text2);">The decision of what to look at is already made. You open the app and the important things are there.</div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">How I applied it</div>
+      <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;">Normal ranges inline, not on tap</div>
+      <div style="font-size:13px;color:var(--text2);">You don't decide whether to look up what 74 MS means. The answer is already next to the number.</div>
+    </div>
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;">
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">How I applied it</div>
+      <div style="font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;">5 emoji, no scale</div>
+      <div style="font-size:13px;color:var(--text2);">You don't decide whether today is a 6 or a 7. You glance, you recognise yourself, you tap.</div>
+    </div>
+  </div>
+</section>
 <section class="section" style="max-width:1100px;">
   <div class="section-header">
     <span class="section-num">08</span>
