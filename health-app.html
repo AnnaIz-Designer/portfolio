@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health App Redesign — Case Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg2: #f5f5f7;
+    --bg3: #e8e8ed;
+    --text: #1d1d1f;
+    --text2: #6e6e73;
+    --text3: #aeaeb2;
+    --border: #d2d2d7;
+    --old: #7c5cbf;
+    --new: #7db5a0;
+  }
+
+  html { scroll-behavior: smooth; color-scheme: light; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 980px; margin: 0 auto; padding: 0 40px; }
+
+  nav {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  nav .container { display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-size: 13px; font-weight: 400; color: var(--text2); text-decoration: none; }
+  .nav-tag { font-size: 12px; color: var(--text3); }
+
+  /* ── HERO ── */
+  .hero { padding: 100px 0 80px; border-bottom: 1px solid var(--border); }
+  .hero-eyebrow { font-size: 13px; color: var(--text3); margin-bottom: 20px; }
+  h1 {
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+  }
+  .nda-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--text3);
+    border: 1px solid var(--border);
+    padding: 4px 12px; border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  .hero-sub {
+    font-size: 18px; font-weight: 300;
+    color: var(--text2); max-width: 560px;
+    line-height: 1.7; margin-bottom: 56px;
+  }
+  .hero-meta {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+  @media (max-width: 600px) { .hero-meta { grid-template-columns: 1fr 1fr; } }
+  .meta-item { padding: 20px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .meta-label { font-size: 11px; color: var(--text3); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+  .meta-value { font-size: 14px; color: var(--text); }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+  .section-eyebrow { font-size: 12px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+  h2 { font-size: 32px; font-weight: 300; letter-spacing: -0.015em; margin-bottom: 20px; line-height: 1.2; }
+  p { font-size: 16px; font-weight: 300; color: var(--text2); line-height: 1.8; margin-bottom: 16px; max-width: 640px; }
+
+  /* ── PHONES ── */
+  .phones-wrap {
+    display: flex; gap: 40px; align-items: flex-end;
+    justify-content: center; margin: 48px 0;
+    flex-wrap: wrap;
+  }
+  .phone-item { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .phone-label { font-size: 12px; color: var(--text3); letter-spacing: 0.05em; text-transform: uppercase; }
+  .phone-frame {
+    width: 160px; height: 320px;
+    border-radius: 28px;
+    border: 6px solid #1d1d1f;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  }
+  .phone-blur {
+    width: 100%; height: 100%;
+    filter: blur(14px) brightness(0.95);
+    transform: scale(1.1);
+  }
+  .phone-overlay {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .phone-overlay span {
+    font-size: 11px; color: rgba(255,255,255,0.7);
+    background: rgba(0,0,0,0.3);
+    padding: 4px 10px; border-radius: 20px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Old phone bg */
+  .phone-old .phone-blur {
+    background: linear-gradient(160deg, #c4b0e8 0%, #9b7fd4 30%, #6b4fc8 60%, #3d2a8a 100%);
+  }
+  /* New phone bg */
+  .phone-new .phone-blur {
+    background: linear-gradient(160deg, #e8f4f0 0%, #c8e8e0 30%, #a8d4c8 60%, #f0ede8 100%);
+  }
+
+  .phone-arrow {
+    font-size: 24px; color: var(--text3);
+    padding-bottom: 160px;
+  }
+
+  /* ── COLOR PALETTE ── */
+  .palette-compare {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  @media (max-width: 500px) { .palette-compare { grid-template-columns: 1fr; } }
+  .palette-side { background: var(--bg); padding: 32px; }
+  .palette-side h3 { font-size: 13px; font-weight: 400; color: var(--text3); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 20px; }
+  .swatches { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .swatch { width: 36px; height: 36px; border-radius: 8px; }
+  .palette-desc { font-size: 13px; color: var(--text2); margin: 0; max-width: none; }
+
+  /* ── METRICS ── */
+  .metrics-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 40px;
+  }
+  @media (max-width: 500px) { .metrics-grid { grid-template-columns: 1fr; } }
+  .metric-card { background: var(--bg); padding: 32px; }
+  .metric-label { font-size: 12px; color: var(--text3); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 16px; }
+  .metric-bars { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+  .bar-row { display: flex; align-items: center; gap: 12px; }
+  .bar-tag { font-size: 12px; color: var(--text3); min-width: 36px; }
+  .bar-track { flex: 1; height: 8px; background: var(--bg2); border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 1s ease; }
+  .bar-val { font-size: 12px; color: var(--text); font-weight: 500; min-width: 36px; text-align: right; }
+  .metric-delta {
+    font-size: 24px; font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+  .metric-delta span { font-size: 14px; color: var(--text3); font-weight: 300; display: block; margin-top: 4px; }
+
+  /* ── CHART ── */
+  .chart-wrap { margin-top: 40px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 32px; }
+  .chart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+  .chart-title { font-size: 14px; font-weight: 400; color: var(--text); }
+  .chart-legend { display: flex; gap: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text3); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  svg.chart { width: 100%; overflow: visible; }
+
+  /* ── PROCESS ── */
+  .process { margin-top: 40px; }
+  .process-step {
+    display: grid; grid-template-columns: 48px 1fr;
+    gap: 24px; padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .process-step:first-child { border-top: 1px solid var(--border); }
+  .process-num { font-size: 12px; color: var(--text3); padding-top: 3px; }
+  .process-content h3 { font-size: 16px; font-weight: 400; color: var(--text); margin-bottom: 4px; }
+  .process-content p { font-size: 14px; margin: 0; max-width: none; }
+
+  /* ── RESULTS ── */
+  .results { margin-top: 40px; }
+  .result-item {
+    display: grid; grid-template-columns: 20px 1fr;
+    gap: 16px; padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .result-item:first-child { border-top: 1px solid var(--border); }
+  .result-check {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--bg2); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .result-check svg { width: 10px; height: 10px; }
+  .result-text h3 { font-size: 15px; font-weight: 400; color: var(--text); margin-bottom: 3px; }
+  .result-text p { font-size: 13px; color: var(--text3); margin: 0; max-width: none; }
+
+  footer { padding: 40px 0; }
+  footer .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  footer p { font-size: 12px; color: var(--text3); margin: 0; max-width: none; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero > * { animation: fadeUp 0.5s ease both; }
+  .hero .hero-eyebrow { animation-delay: 0.05s; }
+  .hero h1             { animation-delay: 0.1s; }
+  .hero .nda-badge     { animation-delay: 0.12s; }
+  .hero .hero-sub      { animation-delay: 0.15s; }
+  .hero .hero-meta     { animation-delay: 0.2s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="#" class="nav-logo">Anna · Design Systems</a>
+    <span class="nav-tag">Case study</span>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Health App · Visual Redesign · 2025–2026</div>
+    <h1>Color System<br>Redesign</h1>
+    <div class="nda-badge">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="5" width="10" height="7" rx="1.5" stroke="#aeaeb2" stroke-width="1.2"/><path d="M4 5V3.5a2 2 0 0 1 4 0V5" stroke="#aeaeb2" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Under NDA — visuals blurred, company undisclosed
+    </div>
+    <p class="hero-sub">Redesigned the visual language of a health monitoring app — shifting from high-contrast purple to a calm, natural palette. The change directly impacted business metrics.</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <div class="meta-label">Category</div>
+        <div class="meta-value">Health &amp; Wellness</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Scope</div>
+        <div class="meta-value">Color system</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Retention lift</div>
+        <div class="meta-value">43% → 78%</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Role</div>
+        <div class="meta-value">Lead Designer</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="section-eyebrow">01 · Before & After</div>
+    <h2>Two versions.<br>One clear direction.</h2>
+    <p>The original design relied on saturated purples and high contrast — visually loud for a health context where users need calm and clarity.</p>
+
+    <div class="phones-wrap">
+      <div class="phone-item">
+        <div class="phone-label">Before</div>
+        <div class="phone-frame phone-old">
+          <div class="phone-blur"></div>
+          <div class="phone-overlay"><span>NDA · blurred</span></div>
+        </div>
+      </div>
+      <div class="phone-arrow">→</div>
+      <div class="phone-item">
+        <div class="phone-label">After</div>
+        <div class="phone-frame phone-new">
+          <div class="phone-blur"></div>
+          <div class="phone-overlay"><span>NDA · blurred</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-eyebrow">02 · Color System</div>
+    <h2>From loud<br>to intentional.</h2>
+    <p>The redesign replaced a saturated purple system with a warm neutral palette — grounded in natural tones that align with the health and wellness category.</p>
+
+    <div class="palette-compare">
+      <div class="palette-side">
+        <h3>Before</h3>
+        <div class="swatches">
+          <div class="swatch" style="background:#7c5cbf" title="#7c5cbf"></div>
+          <div class="swatch" style="background:#9b7fd4" title="#9b7fd4"></div>
+          <div class="swatch" style="background:#c4a0e8" title="#c4a0e8"></div>
+          <div class="swatch" style="background:#3d2a8a" title="#3d2a8a"></div>
+          <div class="swatch" style="background:#ff5c5c" title="#ff5c5c"></div>
+          <div class="swatch" style="background:#ffd166" title="#ffd166"></div>
+        </div>
+        <p class="palette-desc">High saturation, strong contrast. Created visual stress in a wellness context.</p>
+      </div>
+      <div class="palette-side">
+        <h3>After</h3>
+        <div class="swatches">
+          <div class="swatch" style="background:#7db5a0" title="#7db5a0"></div>
+          <div class="swatch" style="background:#b8d4cb" title="#b8d4cb"></div>
+          <div class="swatch" style="background:#e8f1ee" title="#e8f1ee"></div>
+          <div class="swatch" style="background:#efede7" title="#efede7"></div>
+          <div class="swatch" style="background:#5b6473" title="#5b6473"></div>
+          <div class="swatch" style="background:#f7f9fc" title="#f7f9fc"></div>
+        </div>
+        <p class="palette-desc">Muted naturals, low contrast. Creates calm focus — appropriate for daily health monitoring.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-eyebrow">03 · Impact</div>
+    <h2>Numbers that<br>tell the story.</h2>
+    <p>The palette shift was validated through A/B testing. Results showed significant improvement across all key retention and monetization metrics.</p>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">30-day Retention</div>
+        <div class="metric-bars">
+          <div class="bar-row">
+            <span class="bar-tag">Before</span>
+            <div class="bar-track"><div class="bar-fill" style="width:43%;background:var(--old)"></div></div>
+            <span class="bar-val">43%</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-tag">After</span>
+            <div class="bar-track"><div class="bar-fill" style="width:78%;background:var(--new)"></div></div>
+            <span class="bar-val">78%</span>
+          </div>
+        </div>
+        <div class="metric-delta">+35pp
+          <span>35 percentage points increase</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Long-term Subscriptions</div>
+        <div class="metric-bars">
+          <div class="bar-row">
+            <span class="bar-tag">Before</span>
+            <div class="bar-track"><div class="bar-fill" style="width:30%;background:var(--old)"></div></div>
+            <span class="bar-val">Low</span>
+          </div>
+          <div class="bar-row">
+            <span class="bar-tag">After</span>
+            <div class="bar-track"><div class="bar-fill" style="width:85%;background:var(--new)"></div></div>
+            <span class="bar-val">High</span>
+          </div>
+        </div>
+        <div class="metric-delta">↑ Significant
+          <span>Users choosing annual plans increased</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-header">
+        <div class="chart-title">Retention over time — before vs after redesign</div>
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--old)"></div>Before</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--new)"></div>After</div>
+        </div>
+      </div>
+      <svg class="chart" viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grid lines -->
+        <line x1="0" y1="140" x2="600" y2="140" stroke="#d2d2d7" stroke-width="0.5"/>
+        <line x1="0" y1="105" x2="600" y2="105" stroke="#d2d2d7" stroke-width="0.5" stroke-dasharray="4 4"/>
+        <line x1="0" y1="70"  x2="600" y2="70"  stroke="#d2d2d7" stroke-width="0.5" stroke-dasharray="4 4"/>
+        <line x1="0" y1="35"  x2="600" y2="35"  stroke="#d2d2d7" stroke-width="0.5" stroke-dasharray="4 4"/>
+        <!-- Labels -->
+        <text x="0"   y="155" font-size="10" fill="#aeaeb2" font-family="Geist,sans-serif">Day 1</text>
+        <text x="140" y="155" font-size="10" fill="#aeaeb2" font-family="Geist,sans-serif">Day 7</text>
+        <text x="290" y="155" font-size="10" fill="#aeaeb2" font-family="Geist,sans-serif">Day 14</text>
+        <text x="440" y="155" font-size="10" fill="#aeaeb2" font-family="Geist,sans-serif">Day 21</text>
+        <text x="560" y="155" font-size="10" fill="#aeaeb2" font-family="Geist,sans-serif">Day 30</text>
+        <!-- Before line (drops fast) -->
+        <polyline
+          points="0,10 150,40 300,80 450,105 600,119"
+          stroke="#7c5cbf" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- After line (holds better) -->
+        <polyline
+          points="0,10 150,22 300,38 450,44 600,51"
+          stroke="#7db5a0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- End labels -->
+        <text x="610" y="123" font-size="10" fill="#7c5cbf" font-family="Geist,sans-serif">43%</text>
+        <text x="610" y="55"  font-size="10" fill="#7db5a0" font-family="Geist,sans-serif">78%</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-eyebrow">04 · Process</div>
+    <h2>How the decision<br>was made.</h2>
+    <div class="process">
+      <div class="process-step">
+        <span class="process-num">01</span>
+        <div class="process-content">
+          <h3>Research — emotion and color in health contexts</h3>
+          <p>Analyzed how color affects perceived trust, calm, and adherence in health and wellness apps. High-saturation UI increases cognitive load in daily-use tools.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="process-num">02</span>
+        <div class="process-content">
+          <h3>Hypothesis — calm palette reduces churn</h3>
+          <p>Proposed that shifting to muted, nature-inspired tones would reduce visual fatigue and improve long-term engagement with the app.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="process-num">03</span>
+        <div class="process-content">
+          <h3>New token system built in Figma Variables</h3>
+          <p>Rebuilt the entire color system using Figma Variables with light/dark mode support. All tokens named semantically — surface, text, accent, status.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="process-num">04</span>
+        <div class="process-content">
+          <h3>A/B test — new vs old palette</h3>
+          <p>Ran a controlled A/B test with equal user segments over 30 days. Measured retention, session frequency, and subscription conversion.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <span class="process-num">05</span>
+        <div class="process-content">
+          <h3>Full rollout based on results</h3>
+          <p>With 78% vs 43% retention, the decision to roll out the new palette was clear. Full implementation followed with automated token sync to the codebase.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="border-bottom:none">
+  <div class="container">
+    <div class="section-eyebrow">05 · Takeaways</div>
+    <h2>What this<br>project taught.</h2>
+    <div class="results">
+      <div class="result-item">
+        <div class="result-check">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#1d1d1f" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="result-text">
+          <h3>Color is a product decision, not just a visual one</h3>
+          <p>The palette shift directly influenced user behavior — retention and monetization, not just aesthetics</p>
+        </div>
+      </div>
+      <div class="result-item">
+        <div class="result-check">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#1d1d1f" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="result-text">
+          <h3>Semantic token architecture enables faster iteration</h3>
+          <p>A well-structured Variables system let us test and roll out the new palette without touching individual components</p>
+        </div>
+      </div>
+      <div class="result-item">
+        <div class="result-check">
+          <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#1d1d1f" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="result-text">
+          <h3>Context matters more than aesthetics</h3>
+          <p>A palette that works for a fintech or gaming app can be completely wrong for daily health monitoring</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Anna · Design Systems · 2026</p>
+    <p>Under NDA — visuals blurred, company undisclosed</p>
+  </div>
+</footer>
+
+</body>
+</html>
