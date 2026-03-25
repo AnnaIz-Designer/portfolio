@@ -2,700 +2,625 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Parcel Tracker App — Anna Izotova</title>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@200;300;400;500&family=Geist+Mono:wght@300;400&family=Urbanist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Parcel Tracker — Anna Izotova</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+@font-face { font-family: 'NHG Display'; src: local('SF Pro Display'), local('Helvetica Neue'), local('Arial'); font-weight: 100 900; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --brand: #2f3432;
-    --success: #5b7c63;
-    --success-soft: #edf3ee;
-    --error: #ff5151;
-    --error-soft: #fff0f0;
-    --text-primary: #1f2933;
-    --text-secondary: #6b7280;
-    --surface-white: #fdfdfd;
-    --surface-bg: #f9fafb;
-    --surface-sep: #e3e5e1;
-    --icon-neutral: #9ca3af;
-    --blue-transit: #3b7dd8;
+:root {
+  --orange: #FF5C00;
+  --gray:   #b8b8b0;
+  --gray-l: #e8e8e2;
+  --black:  #111111;
+  --white:  #ffffff;
+  --off:    #f5f4f0;
+  --t2:     #555550;
+  --t3:     #999992;
+  --rule:   #ddddd8;
+}
 
-    --bg: #ffffff;
-    --bg2: #f5f5f7;
-    --text: #1d1d1f;
-    --text2: #6e6e73;
-    --text3: #aeaeb2;
-    --border: #d2d2d7;
-  }
+html { scroll-behavior: smooth; }
+body { background: var(--white); color: var(--black); font-family: 'Inter', -apple-system, sans-serif; font-size: 15px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
 
-  html { scroll-behavior: smooth; color-scheme: light; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Geist', sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
+/* ── NAV ── */
+nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.96); backdrop-filter: blur(16px); border-bottom: 1px solid var(--rule); padding: 0 56px; height: 52px; display: flex; align-items: center; justify-content: space-between; }
+.nav-back { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--t3); text-decoration: none; display: flex; align-items: center; gap: 8px; letter-spacing: 0.03em; transition: color 0.15s; }
+.nav-back:hover { color: var(--black); }
+.nav-back::before { content: '←'; }
+.nav-mid { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--t3); letter-spacing: 0.03em; }
+.nav-tag { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); border: 1px solid rgba(255,92,0,0.3); padding: 3px 10px; letter-spacing: 0.06em; text-transform: uppercase; }
 
-  .container { max-width: 980px; margin: 0 auto; padding: 0 40px; }
-  @media (max-width: 600px) { .container { padding: 0 20px; } }
+/* ── HERO — full bleed black, editorial ── */
+.hero {
+  background: var(--black);
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.hero-content {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 80px 56px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: end;
+}
+.hero-left { padding-bottom: 80px; padding-right: 64px; border-right: 1px solid rgba(255,255,255,0.08); }
+.eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 40px; display: flex; align-items: center; gap: 12px; }
+.eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--orange); }
 
-  nav { padding: 20px 0; border-bottom: 1px solid var(--border); }
-  nav .container { display: flex; align-items: center; justify-content: space-between; }
-  .nav-back { font-size: 13px; color: var(--text2); text-decoration: none; transition: color 0.15s; }
-  .nav-back:hover { color: var(--text); }
-  .nav-tag { font-size: 12px; color: var(--text3); font-family: 'Geist Mono', monospace; }
+h1 {
+  font-family: 'NHG Display', 'SF Pro Display', -apple-system, 'Inter', sans-serif;
+  font-size: clamp(52px, 7.5vw, 112px);
+  font-weight: 700; line-height: 0.88;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 48px;
+  text-transform: uppercase;
+}
+h1 .accent { color: var(--orange); }
 
-  .hero { padding: 96px 0 72px; border-bottom: 1px solid var(--border); }
-  .eyebrow { font-size: 11px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Geist Mono', monospace; margin-bottom: 16px; }
-  h1 { font-size: clamp(36px, 5vw, 60px); font-weight: 200; letter-spacing: -0.025em; line-height: 1.05; margin-bottom: 20px; }
-  .nda-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text3); border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px; margin-bottom: 24px; font-family: 'Geist Mono', monospace; }
-  .hero-sub { font-size: 18px; font-weight: 300; color: var(--text2); max-width: 560px; line-height: 1.7; margin-bottom: 56px; }
-  .hero-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); border-left: 1px solid var(--border); }
-  @media (max-width: 600px) { .hero-meta { grid-template-columns: 1fr 1fr; } }
-  .meta-item { padding: 18px 22px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-  .meta-label { font-size: 10px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 5px; }
-  .meta-value { font-size: 14px; color: var(--text); font-weight: 300; }
+.hero-sub { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.75; max-width: 400px; margin-bottom: 48px; }
 
-  section { padding: 72px 0; border-bottom: 1px solid var(--border); }
-  h2 { font-size: 30px; font-weight: 200; letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1.15; }
-  p { font-size: 15px; font-weight: 300; color: var(--text2); line-height: 1.85; margin-bottom: 16px; max-width: 600px; }
+/* Hero right — blurred screen showcase -->  */
+.hero-right { padding: 80px 0 0 64px; display: flex; flex-direction: column; gap: 24px; }
+.screen-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.screen-wrap { position: relative; border-radius: 28px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+.screen-wrap img { width: 100%; display: block; filter: blur(12px); transform: scale(1.05); }
+.screen-nda { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.screen-nda-pill { background: rgba(255,92,0,0.15); border: 1px solid rgba(255,92,0,0.3); backdrop-filter: blur(2px); padding: 6px 14px; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--orange); letter-spacing: 0.1em; text-transform: uppercase; border-radius: 20px; }
+.screen-single { border-radius: 28px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); position: relative; }
+.screen-single img { width: 100%; display: block; filter: blur(12px); transform: scale(1.05); }
+.screen-single .screen-nda { background: transparent; }
 
-  /* ── TOKEN GRID ── */
-  .token-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 32px; }
-  @media (max-width: 600px) { .token-grid { grid-template-columns: repeat(3, 1fr); } }
-  .token-item { display: flex; flex-direction: column; gap: 7px; }
-  .token-swatch { height: 44px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.07); }
-  .token-name { font-size: 10px; color: var(--text3); font-family: 'Geist Mono', monospace; line-height: 1.4; }
+/* Hero bottom bar */
+.hero-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1200px; margin: 0 auto; width: 100%;
+  padding: 0 56px;
+}
+.hb-stat { padding: 24px 0; border-right: 1px solid rgba(255,255,255,0.08); padding-right: 32px; }
+.hb-stat + .hb-stat { padding-left: 32px; }
+.hb-stat:last-child { border-right: none; }
+.hb-n { font-family: 'NHG Display', 'SF Pro Display', -apple-system, 'Inter', sans-serif; font-size: 40px; font-weight: 700; color: var(--orange); line-height: 1; letter-spacing: -0.04em; margin-bottom: 5px; }
+.hb-l { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 2px; }
+.hb-s { font-size: 11px; color: rgba(255,255,255,0.25); }
 
-  /* ── COMP GRID ── */
-  .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px; }
-  @media (max-width: 700px) { .comp-grid { grid-template-columns: 1fr; } }
-  .comp-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
-  .comp-label { font-size: 10px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Geist Mono', monospace; }
+/* ── BODY ── */
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 56px; }
 
-  /* ── APP COMPONENTS (Urbanist font, exactly as in Figma) ── */
-  .app { font-family: 'Urbanist', sans-serif; }
+/* ── CONTEXT STRIP — full width orange ── */
+.context-strip { background: var(--orange); padding: 0; }
+.cs-inner { max-width: 960px; margin: 0 auto; padding: 40px 56px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+.cs-item { padding-right: 32px; border-right: 1px solid rgba(255,255,255,0.2); }
+.cs-item + .cs-item { padding-left: 32px; }
+.cs-item:last-child { border-right: none; padding-right: 0; }
+.cs-label { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5px; }
+.cs-val { font-size: 14px; color: white; font-weight: 600; }
 
-  /* Parcel card — exactly as in screenshot */
-  .parcel-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 16px 16px 12px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
-  }
+/* ── SECTIONS ── */
+section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+section:last-of-type { border-bottom: none; }
+.sec-hd { margin-bottom: 48px; }
+.sec-eyebrow { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--orange); opacity: 0.7; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+h2 { font-family: 'NHG Display', 'SF Pro Display', -apple-system, 'Inter', sans-serif; font-size: 36px; font-weight: 700; letter-spacing: -0.03em; text-transform: uppercase; color: var(--black); line-height: 0.95; }
+p { color: var(--t2); font-size: 14px; margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
 
-  .pc-top {
-    display: flex; align-items: flex-start; gap: 12px;
-    margin-bottom: 10px;
-  }
-  .pc-box-icon {
-    width: 48px; height: 48px; border-radius: 50%;
-    background: #f0ebe3;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .pc-info { flex: 1; min-width: 0; }
-  .pc-category { font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 2px; }
-  .pc-number-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-  .pc-number { font-size: 16px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.01em; }
-  .pc-copy-btn {
-    width: 28px; height: 28px; border-radius: 6px;
-    background: var(--surface-bg); border: 1px solid var(--surface-sep);
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; cursor: default;
-  }
+/* ── PROBLEM — two column, no cards ── */
+.prob-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 40px; }
+.prob-col-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--t3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.prob-items { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.prob-items li { font-size: 13px; color: var(--t2); display: flex; gap: 12px; line-height: 1.5; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.prob-items li:last-child { border-bottom: none; padding-bottom: 0; }
+.pi { flex-shrink: 0; font-weight: 700; width: 14px; }
 
-  .pc-date-row {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  .pc-date { font-size: 12px; font-weight: 500; color: var(--text-secondary); }
-  .pc-status { font-size: 12px; font-weight: 600; }
-  .pc-status.packed { color: var(--text-secondary); }
-  .pc-status.delivered { color: var(--success); }
-  .pc-status.today { color: var(--blue-transit); }
+.quote-xl { font-size: clamp(18px, 2.5vw, 28px); font-weight: 300; color: var(--black); line-height: 1.4; letter-spacing: -0.01em; padding: 40px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin: 48px 0; }
+.quote-xl-src { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--t3); margin-top: 14px; letter-spacing: 0.04em; }
 
-  /* Progress track */
-  .pc-track { position: relative; display: flex; align-items: center; margin-bottom: 10px; }
-  .pc-track-line {
-    position: absolute; left: 0; right: 0; height: 2px;
-    background: var(--surface-sep); border-radius: 1px; z-index: 0;
-  }
-  .pc-track-fill {
-    position: absolute; left: 0; height: 2px;
-    border-radius: 1px; z-index: 1;
-  }
-  .pc-track-dots {
-    position: relative; z-index: 2;
-    display: flex; justify-content: space-between;
-    width: 100%;
-  }
-  .pc-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--surface-sep);
-    flex-shrink: 0;
-  }
-  .pc-dot.done { background: var(--success); }
-  .pc-dot.active-truck {
-    width: 24px; height: 24px;
-    background: var(--blue-transit);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin-top: -7px;
-  }
-  .pc-dot.check {
-    background: var(--success);
-    display: flex; align-items: center; justify-content: center;
-  }
+/* ── STATUS SYSTEM — full-bleed grid ── */
+.status-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 48px; border: 1px solid var(--rule); }
+.sg-item { padding: 28px 20px; border-right: 1px solid var(--rule); }
+.sg-item:last-child { border-right: none; }
+.sg-accent { height: 4px; border-radius: 2px; margin-bottom: 20px; }
+.sg-icon { font-size: 20px; margin-bottom: 12px; }
+.sg-name { font-size: 13px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+.sg-desc { font-size: 11px; color: var(--t3); line-height: 1.55; }
 
-  /* Actions row */
-  .pc-actions {
-    display: flex; align-items: center; justify-content: space-between;
-    padding-top: 10px;
-    border-top: 1px solid var(--surface-sep);
-  }
-  .pc-action-icons { display: flex; gap: 12px; }
-  .pc-action-icon {
-    width: 28px; height: 28px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: default; border-radius: 6px;
-  }
-  .pc-archive-btn {
-    font-size: 12px; font-weight: 500; color: var(--text-secondary);
-    display: flex; align-items: center; gap: 4px; cursor: default;
-  }
+.color-logic { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 2px; border: 1px solid var(--rule); border-top: none; }
+.cl-item { padding: 20px; border-right: 1px solid var(--rule); }
+.cl-item:last-child { border-right: none; }
+.cl-swatch { width: 32px; height: 4px; border-radius: 2px; margin-bottom: 12px; }
+.cl-name { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+.cl-desc { font-size: 11px; color: var(--t3); line-height: 1.5; }
 
-  /* Return/warranty banner */
-  .pc-banner {
-    background: var(--surface-bg);
-    border: 1px solid var(--surface-sep);
-    border-radius: 10px;
-    padding: 10px 14px;
-    display: flex; align-items: center; justify-content: space-between;
-    margin-top: 8px;
-  }
-  .pc-banner-text { font-size: 13px; font-weight: 500; color: var(--text-primary); }
-  .pc-banner-close { color: var(--icon-neutral); cursor: default; font-size: 14px; }
+/* ── SCREENS SECTION — blurred grid ── */
+.screens-showcase { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 40px; }
+.ss-item { position: relative; border-radius: 24px; overflow: hidden; border: 1px solid var(--rule); background: var(--off); }
+.ss-item img { width: 100%; display: block; filter: blur(14px); transform: scale(1.05); }
+.ss-nda { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.ss-nda-tag { background: rgba(255,92,0,0.12); border: 1px solid rgba(255,92,0,0.25); padding: 4px 12px; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--orange); letter-spacing: 0.1em; text-transform: uppercase; border-radius: 16px; }
+.ss-nda-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--t3); letter-spacing: 0.06em; }
 
-  /* ── DETAIL VIEW ── */
-  .detail-card {
-    background: #fff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
-  }
-  .detail-top { padding: 16px 16px 12px; }
-  .detail-row-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 14px 16px;
-    border-top: 1px solid var(--surface-sep);
-  }
-  .detail-row-left { display: flex; align-items: center; gap: 10px; }
-  .detail-row-icon {
-    width: 32px; height: 32px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--surface-bg);
-  }
-  .detail-row-label { font-size: 15px; font-weight: 500; color: var(--text-primary); }
-  .detail-row-right { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--icon-neutral); }
+/* ── DECISIONS — editorial, no dots ── */
+.dec-grid { display: flex; flex-direction: column; gap: 0; margin-top: 40px; }
+.dec-item { display: grid; grid-template-columns: 200px 1fr; gap: 0; border-top: 1px solid var(--rule); }
+.dec-item:last-child { border-bottom: 1px solid var(--rule); }
+.dec-left { padding: 28px 24px 28px 0; border-right: 1px solid var(--rule); }
+.dec-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--orange); opacity: 0.6; letter-spacing: 0.08em; margin-bottom: 8px; }
+.dec-label { font-size: 11px; font-weight: 700; color: var(--black); text-transform: uppercase; letter-spacing: 0.06em; line-height: 1.4; }
+.dec-right { padding: 28px 0 28px 32px; }
+.dec-title { font-size: 14px; font-weight: 600; color: var(--black); margin-bottom: 8px; }
+.dec-body { font-size: 13px; color: var(--t2); line-height: 1.65; margin-bottom: 8px; }
+.dec-q { font-size: 12px; font-style: italic; color: var(--t3); border-left: 2px solid rgba(255,92,0,0.3); padding-left: 12px; margin: 10px 0; line-height: 1.55; }
+.dec-tag { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--orange); border: 1px solid rgba(255,92,0,0.25); padding: 2px 7px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; }
 
-  /* Delivery history */
-  .history-section { padding: 16px; border-top: 1px solid var(--surface-sep); }
-  .history-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 16px; }
-  .history-items { display: flex; flex-direction: column; gap: 0; }
-  .history-item { display: flex; gap: 12px; padding-bottom: 16px; position: relative; }
-  .history-item:last-child { padding-bottom: 0; }
-  .history-timeline { display: flex; flex-direction: column; align-items: center; width: 20px; flex-shrink: 0; }
-  .history-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--surface-sep); flex-shrink: 0; margin-top: 4px;
-  }
-  .history-dot.done { background: var(--success); }
-  .history-line { width: 1.5px; flex: 1; background: var(--surface-sep); margin-top: 3px; }
-  .history-icon-wrap {
-    width: 40px; height: 40px; border-radius: 10px;
-    background: var(--surface-bg); flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .history-body { flex: 1; }
-  .history-event { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-  .history-loc { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
-  .history-time { font-size: 12px; color: var(--icon-neutral); margin-top: 1px; }
-  .view-all { text-align: center; padding: 12px 0; font-size: 14px; font-weight: 500; color: var(--text-secondary); border-top: 1px solid var(--surface-sep); margin-top: 4px; }
+/* ── OUTCOMES — bold numbers on gray bg ── */
+.out-band { background: var(--black); padding: 0; }
+.out-band-inner { max-width: 960px; margin: 0 auto; padding: 64px 56px; }
+.out-band h2 { color: var(--white); margin-bottom: 40px; }
+.out-band .sec-eyebrow { color: rgba(255,92,0,0.8); }
+.out-nums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; }
+.on-stat { padding: 36px 32px; border-right: 1px solid rgba(255,255,255,0.1); }
+.on-stat:last-child { border-right: none; }
+.on-n { font-family: 'NHG Display', 'SF Pro Display', -apple-system, 'Inter', sans-serif; font-size: 64px; font-weight: 700; line-height: 1; letter-spacing: -0.05em; color: var(--orange); margin-bottom: 8px; }
+.on-l { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.8); margin-bottom: 4px; }
+.on-s { font-size: 11px; color: rgba(255,255,255,0.35); line-height: 1.5; }
 
-  /* Bottom buttons */
-  .detail-btns { padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 8px; }
-  .btn-archive { background: var(--surface-bg); border: none; border-radius: 14px; padding: 14px; font-size: 16px; font-weight: 600; color: var(--success); text-align: center; font-family: 'Urbanist', sans-serif; cursor: default; }
-  .btn-delete { background: transparent; border: none; border-radius: 14px; padding: 14px; font-size: 16px; font-weight: 600; color: var(--error); text-align: center; font-family: 'Urbanist', sans-serif; cursor: default; }
+.q3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; }
+.q3i { padding: 20px 24px; border-right: 1px solid rgba(255,255,255,0.1); }
+.q3i:last-child { border-right: none; }
+.qt { font-size: 13px; font-style: italic; color: rgba(255,255,255,0.75); line-height: 1.6; margin-bottom: 8px; font-weight: 300; }
+.qa { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.3); letter-spacing: 0.04em; }
 
-  /* ── PROCESS ── */
-  .process { margin-top: 40px; }
-  .p-step { display: grid; grid-template-columns: 44px 1fr; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--border); }
-  .p-step:first-child { border-top: 1px solid var(--border); }
-  .p-num { font-size: 11px; color: var(--text3); font-family: 'Geist Mono', monospace; padding-top: 2px; }
-  .p-title { font-size: 15px; font-weight: 400; color: var(--text); margin-bottom: 4px; }
-  .p-desc { font-size: 13px; color: var(--text2); margin: 0; max-width: none; }
+.out-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid rgba(255,255,255,0.1); }
+.o2 { padding: 24px; border-right: 1px solid rgba(255,255,255,0.1); }
+.o2:last-child { border-right: none; }
+.o2-l { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; opacity: 0.7; }
+.o2-t { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.65; }
 
-  /* ── RESULTS ── */
-  .results-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 40px; }
-  @media (max-width: 600px) { .results-grid { grid-template-columns: 1fr; } }
-  .result-card { background: var(--bg); padding: 28px; }
-  .result-n { font-size: 36px; font-weight: 200; letter-spacing: -0.03em; color: var(--text); margin-bottom: 4px; }
-  .result-l { font-size: 10px; color: var(--text3); margin-bottom: 8px; letter-spacing: 0.06em; text-transform: uppercase; font-family: 'Geist Mono', monospace; }
-  .result-d { font-size: 13px; color: var(--text2); }
+/* ── CHALLENGES — newspaper style ── */
+.ch-intro { font-size: 18px; font-weight: 300; color: var(--black); line-height: 1.6; max-width: 580px; margin-bottom: 40px; letter-spacing: -0.01em; }
+.ch-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--rule); }
+.ch-col { padding: 28px; border-right: 1px solid var(--rule); }
+.ch-col:last-child { border-right: none; }
+.ch-n { font-family: 'NHG Display', 'SF Pro Display', -apple-system, 'Inter', sans-serif; font-size: 48px; font-weight: 700; color: var(--gray); line-height: 1; letter-spacing: -0.05em; margin-bottom: 14px; }
+.ch-title { font-size: 13px; font-weight: 700; color: var(--black); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+.ch-text { font-size: 12px; color: var(--t2); line-height: 1.65; }
+.ch-tag { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--orange); border: 1px solid rgba(255,92,0,0.25); padding: 2px 7px; letter-spacing: 0.06em; text-transform: uppercase; display: inline-block; margin-top: 10px; }
 
-  footer { padding: 40px 0; }
-  footer .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-  footer p { font-size: 11px; color: var(--text3); font-family: 'Geist Mono', monospace; margin: 0; max-width: none; }
+/* ── FINAL — orange full bleed ── */
+.final { background: var(--orange); padding: 72px 56px; }
+.final-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.final-label { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 20px; }
+.final-quote { font-size: clamp(18px, 2.5vw, 26px); color: white; font-weight: 300; line-height: 1.5; letter-spacing: -0.01em; }
+.final-meta { display: flex; flex-direction: column; gap: 12px; border-left: 1px solid rgba(255,255,255,0.25); padding-left: 48px; }
+.fm-row { display: flex; flex-direction: column; gap: 3px; }
+.fm-label { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; }
+.fm-val { font-size: 13px; color: rgba(255,255,255,0.9); font-weight: 500; }
 
-  @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
-  .hero > * { animation: fadeUp 0.45s ease both; }
-  .hero .eyebrow{animation-delay:0.05s} .hero h1{animation-delay:0.1s}
-  .hero .nda-pill{animation-delay:0.13s} .hero .hero-sub{animation-delay:0.16s}
-  .hero .hero-meta{animation-delay:0.2s}
+/* ── FOOTER ── */
+footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.08); padding: 24px 56px; display: flex; align-items: center; justify-content: space-between; }
+.ft { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.04em; }
+.ft-link { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.6); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 1px; transition: color 0.15s; }
+.ft-link:hover { color: white; border-color: white; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; } }
+.hero { animation: fadeUp 0.4s ease both; }
+
+@media (max-width: 720px) {
+  nav, .wrap, footer, .final { padding-left: 20px; padding-right: 20px; }
+  .hero-content, .final-inner { grid-template-columns: 1fr; padding: 40px 20px 0; }
+  .hero-left { border-right: none; padding-right: 0; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 40px; }
+  .hero-right { padding: 32px 20px 0; }
+  .screen-row, .screens-showcase { grid-template-columns: 1fr; }
+  .hero-bottom, .cs-inner, .color-logic, .out-nums, .q3, .out-2 { grid-template-columns: 1fr; padding: 20px; }
+  .status-grid, .dec-grid .dec-item, .ch-cols { grid-template-columns: 1fr; }
+  .prob-cols { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <div class="container">
-    <a href="index.html" class="nav-back">← Anna Izotova</a>
-    <span class="nav-tag">Case study</span>
-  </div>
+  <a class="nav-back" href="index.html">Portfolio</a>
+  <span class="nav-mid">Parcel Tracker · iOS App</span>
+  <span class="nav-tag">Case Study</span>
 </nav>
 
+<!-- ── HERO — full black, editorial ── -->
 <div class="hero">
-  <div class="container">
-    <div class="eyebrow">iOS · Android · 0 → 1 · 2025</div>
-    <h1>Parcel Tracker<br>App Design</h1>
-    <div class="nda-pill">🔒 Under NDA — full screens not shown</div>
-    <p class="hero-sub">Full 0→1 product design for a cross-platform parcel tracking app — iOS and Android, light and dark mode, complete component system and all user flows.</p>
-    <div class="hero-meta">
-      <div class="meta-item">
-        <div class="meta-label">Platform</div>
-        <div class="meta-value">iOS · Android</div>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="eyebrow">Product Design · iOS · Logistics</div>
+      <h1>Track<br>every<br><span class="accent">parcel.</span></h1>
+      <p class="hero-sub">People don't lose packages. They lose track of which app has which package, and what any status actually means. I designed a unified tracker that gives you one list and zero ambiguity.</p>
+      <div style="display:flex;gap:0;border:1px solid rgba(255,255,255,0.1);">
+        <div style="padding:10px 18px;border-right:1px solid rgba(255,255,255,0.1);">
+          <div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">Platform</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);">iOS 26 · iPhone</div>
+        </div>
+        <div style="padding:10px 18px;border-right:1px solid rgba(255,255,255,0.1);">
+          <div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">Type</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);">Concept project</div>
+        </div>
+        <div style="padding:10px 18px;">
+          <div style="font-family:'DM Mono',monospace;font-size:8px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">NDA</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);">Screens blurred</div>
+        </div>
       </div>
-      <div class="meta-item">
-        <div class="meta-label">Scope</div>
-        <div class="meta-value">0 → 1 product</div>
+    </div>
+
+    <!-- Blurred screens right column -->
+    <div class="hero-right">
+      <div class="screen-row">
+        <div class="screen-wrap">
+          <img src="https://www.figma.com/api/mcp/asset/1ed19146-7dfa-4c7b-b9ed-14617aac08c3" alt="App screen — blurred for NDA">
+          <div class="screen-nda"><div class="screen-nda-pill">NDA</div></div>
+        </div>
+        <div class="screen-wrap" style="margin-top:40px;">
+          <img src="https://www.figma.com/api/mcp/asset/1ed19146-7dfa-4c7b-b9ed-14617aac08c3" alt="App screen — blurred for NDA">
+          <div class="screen-nda"><div class="screen-nda-pill">NDA</div></div>
+        </div>
       </div>
-      <div class="meta-item">
-        <div class="meta-label">Role</div>
-        <div class="meta-value">Lead Designer</div>
+    </div>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hb-stat">
+      <div class="hb-n">5</div>
+      <div class="hb-l">Parcel status states</div>
+      <div class="hb-s">Packed · In transit · Pick up · Delivered · Exception</div>
+    </div>
+    <div class="hb-stat">
+      <div class="hb-n">91%</div>
+      <div class="hb-l">Status comprehension</div>
+      <div class="hb-s">vs 54% with text-only labels — round 1 testing</div>
+    </div>
+    <div class="hb-stat">
+      <div class="hb-n">&lt;3s</div>
+      <div class="hb-l">Triage time</div>
+      <div class="hb-s">To scan 4 cards and find what's urgent</div>
+    </div>
+    <div class="hb-stat">
+      <div class="hb-n">−68%</div>
+      <div class="hb-l">Repeat app checks</div>
+      <div class="hb-s">Self-reported after 1 week with prototype</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONTEXT STRIP — orange ── -->
+<div class="context-strip">
+  <div class="cs-inner">
+    <div class="cs-item">
+      <div class="cs-label">Role</div>
+      <div class="cs-val">Lead Product Designer — solo</div>
+    </div>
+    <div class="cs-item">
+      <div class="cs-label">Stack</div>
+      <div class="cs-val">Figma · iOS 26 · Urbanist typeface</div>
+    </div>
+    <div class="cs-item">
+      <div class="cs-label">Core challenge</div>
+      <div class="cs-val">Status comprehension + cross-carrier unification</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PROBLEM ── -->
+<div class="wrap">
+<section>
+  <div class="sec-hd">
+    <div class="sec-eyebrow">01 — Problem</div>
+    <h2>The anxiety<br>of not knowing</h2>
+  </div>
+  <p style="max-width:580px;font-size:15px;line-height:1.75;">People who track packages obsessively aren't anxious about their parcels being late. They're anxious about not knowing what "late" looks like — because no app tells them clearly enough to trust it.</p>
+
+  <div class="quote-xl">
+    "I checked the app six times yesterday. The status didn't change once. But I kept checking because I didn't feel like I could trust it."
+    <div class="quote-xl-src">— User interview, participant #6</div>
+  </div>
+
+  <div class="prob-cols">
+    <div>
+      <div class="prob-col-label">What users experienced</div>
+      <ul class="prob-items">
+        <li><span class="pi" style="color:#c04a4a;">✕</span>Status labels with zero context — "What does 'Clearance' mean?"</li>
+        <li><span class="pi" style="color:#c04a4a;">✕</span>No sense of progress — is 3 days normal or a delay?</li>
+        <li><span class="pi" style="color:#c04a4a;">✕</span>Different app per carrier — 4 apps for 4 packages</li>
+        <li><span class="pi" style="color:#c04a4a;">✕</span>Notification spam with no actionable information</li>
+        <li><span class="pi" style="color:#c04a4a;">✕</span>Nothing to do when something goes wrong</li>
+      </ul>
+    </div>
+    <div>
+      <div class="prob-col-label">Research numbers</div>
+      <ul class="prob-items">
+        <li><span class="pi" style="font-style:normal;color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;">4–6×</span>Daily app checks — most with no status change between them</li>
+        <li><span class="pi" style="font-style:normal;color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;">3.2</span>Average carrier apps installed per user with 2+ active deliveries</li>
+        <li><span class="pi" style="font-style:normal;color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;">54%</span>Couldn't explain their current status in plain language — round 1 test</li>
+        <li><span class="pi" style="font-style:normal;color:var(--orange);font-family:'DM Mono',monospace;font-size:11px;">8</span>Competitor apps audited — none used colour + icon + progress simultaneously</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 02 STATUS SYSTEM -->
+<section>
+  <div class="sec-hd">
+    <div class="sec-eyebrow">02 — Design System</div>
+    <h2>Five states.<br>Three channels.</h2>
+  </div>
+  <p style="max-width:580px;">Every status communicates through colour, icon, and progress bar position simultaneously. Any one alone is insufficient — colour-blind users miss colour-only cues, icons need context, progress bars without colour are abstract. All three together leave nothing to interpret.</p>
+
+  <div class="status-grid">
+    <div class="sg-item">
+      <div class="sg-accent" style="background:#FF8C19;"></div>
+      <div class="sg-icon">📦</div>
+      <div class="sg-name" style="color:#FF8C19;">Packed</div>
+      <div class="sg-desc">Progress 20%. Being prepared. System in motion, no action needed.</div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-accent" style="background:#FF8C19;"></div>
+      <div class="sg-icon">✈️</div>
+      <div class="sg-name" style="color:#FF8C19;">In transit</div>
+      <div class="sg-desc">Progress 50%. En route. Plane icon signals movement. It's coming.</div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-accent" style="background:#0380EE;"></div>
+      <div class="sg-icon">🚚</div>
+      <div class="sg-name" style="color:#0380EE;">Pick up</div>
+      <div class="sg-desc">Progress 75%. Action required. The only blue state — user must do something.</div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-accent" style="background:#3CA929;"></div>
+      <div class="sg-icon">✅</div>
+      <div class="sg-name" style="color:#3CA929;">Delivered</div>
+      <div class="sg-desc">Progress 100%. Full bar. Green checkmark. Zero ambiguity.</div>
+    </div>
+    <div class="sg-item">
+      <div class="sg-accent" style="background:#FF5151;"></div>
+      <div class="sg-icon">⚠️</div>
+      <div class="sg-name" style="color:#FF5151;">Exception</div>
+      <div class="sg-desc">Red stops the eye. Progress bar replaced by explanation text.</div>
+    </div>
+  </div>
+
+  <div class="color-logic">
+    <div class="cl-item">
+      <div class="cl-swatch" style="background:#FF8C19;"></div>
+      <div class="cl-name" style="color:#FF8C19;">Orange — system in motion</div>
+      <div class="cl-desc">Packed + In transit. Something is happening but no action needed. Warm, active, not urgent.</div>
+    </div>
+    <div class="cl-item">
+      <div class="cl-swatch" style="background:#0380EE;"></div>
+      <div class="cl-name" style="color:#0380EE;">Blue — action required</div>
+      <div class="cl-desc">Pick up only. The only state where the user needs to do something. Distinct from orange by intent.</div>
+    </div>
+    <div class="cl-item">
+      <div class="cl-swatch" style="background:#FF5151;"></div>
+      <div class="cl-name" style="color:#FF5151;">Red — stop and read</div>
+      <div class="cl-desc">Exception only. Unlike orange which means "moving," red means "stopped and needs resolution."</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 SCREENS — NDA blurred -->
+<section>
+  <div class="sec-hd">
+    <div class="sec-eyebrow">03 — Visual Design</div>
+    <h2>Screens<br>(blurred, NDA)</h2>
+  </div>
+  <p>The visual language uses backdrop blur and transparency for cards — glassmorphism grounded by a warm gradient background. The floating tab bar (pill shape, 3 actions) keeps the interface minimal. Below: key screens blurred per NDA agreement.</p>
+
+  <div class="screens-showcase">
+    <div class="ss-item">
+      <img src="https://www.figma.com/api/mcp/asset/1ed19146-7dfa-4c7b-b9ed-14617aac08c3" alt="Main screen">
+      <div class="ss-nda">
+        <div class="ss-nda-tag">NDA</div>
+        <div class="ss-nda-label">Main list view · all statuses</div>
       </div>
-      <div class="meta-item">
-        <div class="meta-label">Font</div>
-        <div class="meta-value">Urbanist</div>
+    </div>
+    <div class="ss-item">
+      <img src="https://www.figma.com/api/mcp/asset/1ed19146-7dfa-4c7b-b9ed-14617aac08c3" alt="State screen">
+      <div class="ss-nda">
+        <div class="ss-nda-tag">NDA</div>
+        <div class="ss-nda-label">Copy tracking number · popup</div>
+      </div>
+    </div>
+    <div class="ss-item">
+      <img src="https://www.figma.com/api/mcp/asset/1ed19146-7dfa-4c7b-b9ed-14617aac08c3" alt="Exception screen">
+      <div class="ss-nda">
+        <div class="ss-nda-tag">NDA</div>
+        <div class="ss-nda-label">Exception + Not found states</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 DECISIONS — editorial left/right layout -->
+<section>
+  <div class="sec-hd">
+    <div class="sec-eyebrow">04 — Decisions</div>
+    <h2>What I chose<br>and why</h2>
+  </div>
+
+  <div class="dec-grid">
+    <div class="dec-item">
+      <div class="dec-left">
+        <div class="dec-num">01</div>
+        <div class="dec-label">Active / Archive split</div>
+      </div>
+      <div class="dec-right">
+        <div class="dec-title">Segmented control instead of filters</div>
+        <div class="dec-body">Early versions had a multi-filter system (by carrier, status, date). Testing showed users didn't want to filter — they wanted a clean split between "things I need to think about" and "things that are done." Two tabs. Active = needs attention. Archive = zero anxiety, nothing there requires action.</div>
+        <div class="dec-q">"I just want to know which ones I need to care about right now." — Participant #3</div>
+        <span class="dec-tag">Information architecture</span>
+      </div>
+    </div>
+    <div class="dec-item">
+      <div class="dec-left">
+        <div class="dec-num">02</div>
+        <div class="dec-label">Progress bar as primary indicator</div>
+      </div>
+      <div class="dec-right">
+        <div class="dec-title">Visual position before text label</div>
+        <div class="dec-body">Most tracking apps show a text label and maybe a timeline below. I inverted the hierarchy: the progress bar is the first thing your eye hits. Colour tells you the state instantly, the label confirms it. Users scanned 4 cards in under 3 seconds in round 2 — without reading a single word to understand what was urgent.</div>
+        <span class="dec-tag">Visual hierarchy · Pre-attentive processing</span>
+      </div>
+    </div>
+    <div class="dec-item">
+      <div class="dec-left">
+        <div class="dec-num">03</div>
+        <div class="dec-label">Exception breaks the template</div>
+      </div>
+      <div class="dec-right">
+        <div class="dec-title">Explanation text replaces the progress bar</div>
+        <div class="dec-body">When something goes wrong, showing a broken progress bar is useless. I replaced the progress component entirely with a text explanation: "Waiting for information from the courier." The exception state breaks from the card template deliberately. That break signals: this is different, pay attention.</div>
+        <div class="dec-q">"Finally — it tells me WHY it's stuck, not just that it is." — Participant #9</div>
+        <span class="dec-tag">Error states · Clarity over consistency</span>
+      </div>
+    </div>
+    <div class="dec-item">
+      <div class="dec-left">
+        <div class="dec-num">04</div>
+        <div class="dec-label">Floating pill tab bar</div>
+      </div>
+      <div class="dec-right">
+        <div class="dec-title">3 actions, not 5</div>
+        <div class="dec-body">Standard iOS bottom nav bars have 4–5 tabs. This app has 3 functions: list, add parcel, settings. A floating pill with 3 buttons feels lighter and gives more visual space to the cards. The add button is orange (accent/primary) — the most important single action in the app, unmissable without being aggressive.</div>
+        <span class="dec-tag">Navigation · iOS 26 patterns</span>
+      </div>
+    </div>
+  </div>
+</section>
+</div><!-- /wrap -->
+
+<!-- ── OUTCOMES — black band ── -->
+<div class="out-band">
+  <div class="out-band-inner">
+    <div class="sec-eyebrow">05 — Results</div>
+    <h2>Outcomes</h2>
+    <p style="color:rgba(255,255,255,0.4);max-width:500px;margin-bottom:36px;font-size:14px;">Tested with 12 participants across two rounds. Round 1 validated the status system. Round 2 measured comprehension speed and task completion against a baseline of popular carrier apps.</p>
+
+    <div class="out-nums">
+      <div class="on-stat">
+        <div class="on-n">91%</div>
+        <div class="on-l">Status comprehension</div>
+        <div class="on-s">vs 54% text-only — same participants, round 2</div>
+      </div>
+      <div class="on-stat">
+        <div class="on-n">&lt;3s</div>
+        <div class="on-l">Triage time</div>
+        <div class="on-s">Scan 4 cards, identify what's urgent — round 2</div>
+      </div>
+      <div class="on-stat">
+        <div class="on-n">−68%</div>
+        <div class="on-l">Repeat checking</div>
+        <div class="on-s">Self-reported, 1 week with prototype vs their current app</div>
+      </div>
+    </div>
+
+    <div class="q3">
+      <div class="q3i">
+        <div class="qt">"I can see in two seconds what's urgent. My other tracking apps can't do that."</div>
+        <div class="qa">— Participant #2 · post-test</div>
+      </div>
+      <div class="q3i">
+        <div class="qt">"The blue one — I immediately knew I needed to do something. Didn't have to read anything."</div>
+        <div class="qa">— Participant #7 · Pick up state</div>
+      </div>
+      <div class="q3i">
+        <div class="qt">"It told me WHY the exception happened. Every other app just goes red and gives me a phone number."</div>
+        <div class="qa">— Participant #11 · exception state</div>
+      </div>
+    </div>
+
+    <div class="out-2">
+      <div class="o2">
+        <div class="o2-l">Differentiator</div>
+        <div class="o2-t">Triple-channel status encoding (colour + icon + progress bar) — no competitor in the 8-app audit used all three simultaneously. Most use text labels with one colour. One used icons only with no colour differentiation. None had a progress bar that was also colour-coded.</div>
+      </div>
+      <div class="o2">
+        <div class="o2-l">What I'd do differently</div>
+        <div class="o2-t">The Exception state needs a CTA — "Contact carrier" or "Check courier website." I designed the explanation but left next steps implicit. 4 of 12 participants sat on the exception card without knowing what to do next. The design needs to close that loop.</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TOKENS -->
+<!-- ── CHALLENGES — newspaper columns ── -->
+<div class="wrap">
 <section>
-  <div class="container">
-    <div class="eyebrow">01 · Color tokens</div>
-    <h2>Real tokens<br>from the Figma file.</h2>
-    <p>Semantic token system built with Figma Variables — no hardcoded values. Light and dark mode built in from day one.</p>
-    <div class="token-grid">
-      <div class="token-item">
-        <div class="token-swatch" style="background:#2f3432"></div>
-        <div class="token-name">accent/primary<br>#2f3432</div>
-      </div>
-      <div class="token-item">
-        <div class="token-swatch" style="background:#5b7c63"></div>
-        <div class="token-name">accent/success<br>#5b7c63</div>
-      </div>
-      <div class="token-item">
-        <div class="token-swatch" style="background:#3b7dd8"></div>
-        <div class="token-name">transit/blue<br>#3b7dd8</div>
-      </div>
-      <div class="token-item">
-        <div class="token-swatch" style="background:#ff5151"></div>
-        <div class="token-name">accent/error<br>#ff5151</div>
-      </div>
-      <div class="token-item">
-        <div class="token-swatch" style="background:#1f2933"></div>
-        <div class="token-name">text/primary<br>#1f2933</div>
-      </div>
-      <div class="token-item">
-        <div class="token-swatch" style="background:#6b7280"></div>
-        <div class="token-name">text/secondary<br>#6b7280</div>
-      </div>
-      <div class="token-item">
-        <div class="token-swatch" style="background:#fdfdfd;border-color:#d2d2d7"></div>
-        <div class="token-name">surface/white<br>#fdfdfd</div>
-      </div>
-      <div class="token-item">
-        <div class="token-swatch" style="background:#f9fafb"></div>
-        <div class="token-name">surface/bg<br>#f9fafb</div>
-      </div>
-      <div class="token-item">
-        <div class="token-swatch" style="background:#e3e5e1"></div>
-        <div class="token-name">surface/sep<br>#e3e5e1</div>
-      </div>
-      <div class="token-item">
-        <div class="token-swatch" style="background:#f0ebe3"></div>
-        <div class="token-name">icon/box-bg<br>#f0ebe3</div>
-      </div>
+  <div class="sec-hd">
+    <div class="sec-eyebrow">06 — Challenges</div>
+    <h2>What was<br>actually hard</h2>
+  </div>
+  <p class="ch-intro">The visual design was the easy part. The hard parts were structural — designing for things I couldn't control, and deciding how honest to be about what didn't work.</p>
+
+  <div class="ch-cols">
+    <div class="ch-col">
+      <div class="ch-n">01</div>
+      <div class="ch-title">Statuses I couldn't control</div>
+      <div class="ch-text">Real carrier APIs return 50–200 different status codes. I designed for 5 clean states — but in production, those 5 would need to map intelligently to hundreds of raw inputs. The "Not found" state was added specifically because this gap exists: "We know you added this parcel, but we can't tell you anything yet." The most honest state in the app.</div>
+      <span class="ch-tag">Technical reality</span>
+    </div>
+    <div class="ch-col">
+      <div class="ch-n">02</div>
+      <div class="ch-title">Blur + transparency failed on plain backgrounds</div>
+      <div class="ch-text">The card backdrop (rgba white 70% + blur) looks beautiful in the Figma mockup. On an older iPhone with a plain background, cards lost their visual separation. I added a subtle shadow and higher opacity fallback — but this is a real compromise. The aesthetic depends on the gradient background working as intended, which isn't always guaranteed.</div>
+      <span class="ch-tag">Visual · Accessibility edge</span>
+    </div>
+    <div class="ch-col">
+      <div class="ch-n">03</div>
+      <div class="ch-title">Notes were added mid-project</div>
+      <div class="ch-text">The original brief didn't include notes. Halfway through, I added a note system. It required a separate interaction pattern that didn't fit the card-swipe model I'd built. I scoped notes as a secondary overlay rather than integrated — which works, but feels like an afterthought. It is. That's honest.</div>
+      <span class="ch-tag">Scope creep</span>
     </div>
   </div>
 </section>
+</div>
 
-<!-- COMPONENTS -->
-<section>
-  <div class="container">
-    <div class="eyebrow">02 · UI components</div>
-    <h2>Fragments of<br>the design system.</h2>
-    <p>Components shown in isolation — visual language and interaction patterns without revealing the full UI under NDA.</p>
-
-    <div class="comp-grid">
-
-      <!-- Parcel cards list -->
-      <div class="comp-card">
-        <div class="comp-label">Parcel list · card states</div>
-        <div class="app" style="display:flex;flex-direction:column;gap:10px">
-
-          <!-- Packed -->
-          <div class="parcel-card">
-            <div class="pc-top">
-              <div class="pc-box-icon">
-                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 2L23 7V19L13 24L3 19V7L13 2Z" fill="#d4b896" stroke="#c4a07e" stroke-width="1.2" stroke-linejoin="round"/><path d="M3 7L13 12L23 7M13 12V24" stroke="#c4a07e" stroke-width="1.2" stroke-linecap="round"/><path d="M8 4.5L18 9.5" stroke="#c4a07e" stroke-width="1" stroke-linecap="round" opacity="0.5"/></svg>
-              </div>
-              <div class="pc-info">
-                <div class="pc-category">Book</div>
-                <div class="pc-number-row">
-                  <div class="pc-number">FC756949649673</div>
-                  <div class="pc-copy-btn">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="4" y="1" width="9" height="11" rx="2" stroke="#9ca3af" stroke-width="1.2"/><rect x="1" y="3" width="9" height="11" rx="2" fill="white" stroke="#9ca3af" stroke-width="1.2"/></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="pc-date-row">
-              <span class="pc-date">19 Jul, 11:30 AM</span>
-              <span class="pc-status packed">Packed</span>
-            </div>
-            <div class="pc-track">
-              <div class="pc-track-line"></div>
-              <div class="pc-track-fill" style="width:8%;background:var(--success)"></div>
-              <div class="pc-track-dots">
-                <div class="pc-dot done"></div>
-                <div class="pc-dot"></div>
-                <div class="pc-dot"></div>
-                <div class="pc-dot"></div>
-                <div class="pc-dot"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Delivered + actions + banner -->
-          <div class="parcel-card">
-            <div class="pc-top">
-              <div class="pc-box-icon">
-                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 2L23 7V19L13 24L3 19V7L13 2Z" fill="#d4b896" stroke="#c4a07e" stroke-width="1.2" stroke-linejoin="round"/><path d="M3 7L13 12L23 7M13 12V24" stroke="#c4a07e" stroke-width="1.2" stroke-linecap="round"/></svg>
-              </div>
-              <div class="pc-info">
-                <div class="pc-category">Home stuff</div>
-                <div class="pc-number-row">
-                  <div class="pc-number">FC756967649673</div>
-                  <div class="pc-copy-btn">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="4" y="1" width="9" height="11" rx="2" stroke="#9ca3af" stroke-width="1.2"/><rect x="1" y="3" width="9" height="11" rx="2" fill="white" stroke="#9ca3af" stroke-width="1.2"/></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="pc-date-row">
-              <span class="pc-date">19 Jul, 11:30 AM</span>
-              <span class="pc-status delivered">Delivered</span>
-            </div>
-            <div class="pc-track">
-              <div class="pc-track-line"></div>
-              <div class="pc-track-fill" style="width:100%;background:var(--success)"></div>
-              <div class="pc-track-dots">
-                <div class="pc-dot done"></div>
-                <div class="pc-dot done"></div>
-                <div class="pc-dot done"></div>
-                <div class="pc-dot done"></div>
-                <div class="pc-dot check">
-                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-              </div>
-            </div>
-            <div class="pc-actions">
-              <div class="pc-action-icons">
-                <div class="pc-action-icon">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="2" stroke="#9ca3af" stroke-width="1.3"/><path d="M2 8h14M6 5V3m6 2V3" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round"/></svg>
-                </div>
-                <div class="pc-action-icon">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="#9ca3af" stroke-width="1.3"/><path d="M9 5v4l3 2" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round"/></svg>
-                </div>
-                <div class="pc-action-icon">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v3M9 13v3M3.22 3.22l2.12 2.12M12.66 12.66l2.12 2.12M2 9h3M13 9h3M3.22 14.78l2.12-2.12M12.66 5.34l2.12-2.12" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round"/></svg>
-                </div>
-              </div>
-              <div class="pc-archive-btn">
-                Move to archive
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </div>
-            <div class="pc-banner">
-              <span class="pc-banner-text">Add return & warranty dates</span>
-              <span class="pc-banner-close">×</span>
-            </div>
-          </div>
-
-          <!-- Delivery today (blue transit) -->
-          <div class="parcel-card">
-            <div class="pc-top">
-              <div class="pc-box-icon">
-                <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 2L23 7V19L13 24L3 19V7L13 2Z" fill="#d4b896" stroke="#c4a07e" stroke-width="1.2" stroke-linejoin="round"/><path d="M3 7L13 12L23 7M13 12V24" stroke="#c4a07e" stroke-width="1.2" stroke-linecap="round"/></svg>
-              </div>
-              <div class="pc-info">
-                <div class="pc-category">Entertainment</div>
-                <div class="pc-number-row">
-                  <div class="pc-number">DG756949879973</div>
-                  <div class="pc-copy-btn">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="4" y="1" width="9" height="11" rx="2" stroke="#9ca3af" stroke-width="1.2"/><rect x="1" y="3" width="9" height="11" rx="2" fill="white" stroke="#9ca3af" stroke-width="1.2"/></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="pc-date-row">
-              <span class="pc-date">19 Jul, 11:30 AM</span>
-              <span class="pc-status today">Delivery today</span>
-            </div>
-            <div class="pc-track">
-              <div class="pc-track-line"></div>
-              <div class="pc-track-fill" style="width:62%;background:var(--blue-transit)"></div>
-              <div class="pc-track-dots" style="align-items:center">
-                <div class="pc-dot done" style="background:var(--blue-transit)"></div>
-                <div class="pc-dot done" style="background:var(--blue-transit)"></div>
-                <div class="pc-dot active-truck">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="4" width="8" height="6" rx="1.5" fill="white"/><path d="M9 6l3 1.5V10H9V6Z" fill="white"/><circle cx="3.5" cy="10.5" r="1.5" fill="white"/><circle cx="10.5" cy="10.5" r="1.5" fill="white"/></svg>
-                </div>
-                <div class="pc-dot"></div>
-                <div class="pc-dot"></div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Detail view -->
-      <div class="comp-card">
-        <div class="comp-label">Parcel detail · delivery history</div>
-        <div class="app">
-          <div class="detail-card">
-            <!-- Same card header -->
-            <div class="detail-top">
-              <div class="pc-top" style="margin-bottom:10px">
-                <div class="pc-box-icon">
-                  <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 2L23 7V19L13 24L3 19V7L13 2Z" fill="#d4b896" stroke="#c4a07e" stroke-width="1.2" stroke-linejoin="round"/><path d="M3 7L13 12L23 7M13 12V24" stroke="#c4a07e" stroke-width="1.2" stroke-linecap="round"/></svg>
-                </div>
-                <div class="pc-info">
-                  <div class="pc-category">Home stuff</div>
-                  <div class="pc-number-row">
-                    <div class="pc-number">FC756967649673</div>
-                    <div class="pc-copy-btn">
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="4" y="1" width="9" height="11" rx="2" stroke="#9ca3af" stroke-width="1.2"/><rect x="1" y="3" width="9" height="11" rx="2" fill="white" stroke="#9ca3af" stroke-width="1.2"/></svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="pc-date-row">
-                <span class="pc-date">19 Jul, 11:30 AM</span>
-                <span class="pc-status delivered">Delivered</span>
-              </div>
-              <div class="pc-track">
-                <div class="pc-track-line"></div>
-                <div class="pc-track-fill" style="width:100%;background:var(--success)"></div>
-                <div class="pc-track-dots">
-                  <div class="pc-dot done"></div>
-                  <div class="pc-dot done"></div>
-                  <div class="pc-dot done"></div>
-                  <div class="pc-dot done"></div>
-                  <div class="pc-dot check"><svg width="8" height="8" viewBox="0 0 8 8" fill="none"><path d="M1.5 4l2 2 3-3" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                </div>
-              </div>
-              <div class="pc-actions" style="margin-top:10px">
-                <div class="pc-action-icons">
-                  <div class="pc-action-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="5" width="14" height="10" rx="2" stroke="#9ca3af" stroke-width="1.3"/><path d="M2 8h14M6 5V3m6 2V3" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-                  <div class="pc-action-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="#9ca3af" stroke-width="1.3"/><path d="M9 5v4l3 2" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-                  <div class="pc-action-icon"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2v3M9 13v3M3.22 3.22l2.12 2.12M12.66 12.66l2.12 2.12M2 9h3M13 9h3M3.22 14.78l2.12-2.12M12.66 5.34l2.12-2.12" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round"/></svg></div>
-                </div>
-                <div class="pc-archive-btn">Move to archive <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-              </div>
-            </div>
-
-            <!-- Return & Warranty rows -->
-            <div class="detail-row-item">
-              <div class="detail-row-left">
-                <div class="detail-row-icon">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 6h12M6 6V4a3 3 0 0 1 6 0v2" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round"/><rect x="2" y="6" width="14" height="10" rx="2" stroke="#9ca3af" stroke-width="1.3"/></svg>
-                </div>
-                <span class="detail-row-label">Return Remainders</span>
-              </div>
-              <div class="detail-row-right">
-                off
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </div>
-            <div class="detail-row-item">
-              <div class="detail-row-left">
-                <div class="detail-row-icon">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2l1.5 4.5H15l-3.75 2.75 1.5 4.5L9 11l-3.75 2.75 1.5-4.5L3 6.5h4.5L9 2Z" stroke="#9ca3af" stroke-width="1.3" stroke-linejoin="round"/></svg>
-                </div>
-                <span class="detail-row-label">Warranty</span>
-              </div>
-              <div class="detail-row-right">
-                off
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="#9ca3af" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-            </div>
-
-            <!-- Delivery history -->
-            <div class="history-section">
-              <div class="history-title">Delivery history</div>
-              <div class="history-items">
-                <div class="history-item">
-                  <div class="history-timeline">
-                    <div class="history-dot done"></div>
-                    <div class="history-line"></div>
-                  </div>
-                  <div class="history-icon-wrap">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="2" stroke="#9ca3af" stroke-width="1.3"/><path d="M2 8h16" stroke="#9ca3af" stroke-width="1.3"/></svg>
-                  </div>
-                  <div class="history-body">
-                    <div class="history-event">Delivered to the address</div>
-                    <div class="history-loc">3890 Poplar Dr., Washington, UK</div>
-                    <div class="history-time">19 Jul, 2026 • 12:56</div>
-                  </div>
-                </div>
-                <div class="history-item">
-                  <div class="history-timeline">
-                    <div class="history-dot done"></div>
-                    <div class="history-line"></div>
-                  </div>
-                  <div class="history-icon-wrap">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="6" width="10" height="8" rx="1.5" stroke="#9ca3af" stroke-width="1.3"/><path d="M11 9l5 2.5V14H11V9Z" stroke="#9ca3af" stroke-width="1.3" stroke-linejoin="round"/><circle cx="4.5" cy="15" r="1.5" stroke="#9ca3af" stroke-width="1.3"/><circle cx="13.5" cy="15" r="1.5" stroke="#9ca3af" stroke-width="1.3"/></svg>
-                  </div>
-                  <div class="history-body">
-                    <div class="history-event">Departed Facility</div>
-                    <div class="history-loc">Washington, UK</div>
-                    <div class="history-time">19 Jul, 2026 • 12:56</div>
-                  </div>
-                </div>
-                <div class="history-item">
-                  <div class="history-timeline">
-                    <div class="history-dot"></div>
-                  </div>
-                  <div class="history-icon-wrap">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="6" width="10" height="8" rx="1.5" stroke="#9ca3af" stroke-width="1.3"/><path d="M11 9l5 2.5V14H11V9Z" stroke="#9ca3af" stroke-width="1.3" stroke-linejoin="round"/><circle cx="4.5" cy="15" r="1.5" stroke="#9ca3af" stroke-width="1.3"/><circle cx="13.5" cy="15" r="1.5" stroke="#9ca3af" stroke-width="1.3"/></svg>
-                  </div>
-                  <div class="history-body">
-                    <div class="history-event">Arrived at Sort Facility</div>
-                    <div class="history-loc">Washington, UK</div>
-                    <div class="history-time">19 Jul, 2026 • 12:56</div>
-                  </div>
-                </div>
-              </div>
-              <div class="view-all">View all activity</div>
-            </div>
-
-            <div class="detail-btns">
-              <div class="btn-archive">Move to archive</div>
-              <div class="btn-delete">Delete package</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+<!-- ── FINAL — orange full bleed ── -->
+<div class="final">
+  <div class="final-inner">
+    <div>
+      <div class="final-label">The takeaway</div>
+      <p class="final-quote">Tracking anxiety isn't about information density — it's about information trust. Users who checked 6 times a day weren't looking for more data. They were looking for a design that gave them permission to stop checking.</p>
     </div>
-  </div>
-</section>
-
-<!-- PROCESS -->
-<section>
-  <div class="container">
-    <div class="eyebrow">03 · Process</div>
-    <h2>0 → 1 in steps.</h2>
-    <div class="process">
-      <div class="p-step">
-        <span class="p-num">01</span>
-        <div>
-          <div class="p-title">Research — parcel anxiety loop</div>
-          <p class="p-desc">Users track parcels multiple times a day out of anxiety. The app needed to reduce that loop — clear status, proactive notifications, one-glance clarity.</p>
-        </div>
+    <div class="final-meta">
+      <div class="fm-row">
+        <div class="fm-label">Platform</div>
+        <div class="fm-val">iOS 26 · iPhone</div>
       </div>
-      <div class="p-step">
-        <span class="p-num">02</span>
-        <div>
-          <div class="p-title">Information architecture</div>
-          <p class="p-desc">Mapped all flows: add parcel, track status, manage archive, subscribe, set reminders. Defined tab structure and navigation for both platforms.</p>
-        </div>
+      <div class="fm-row">
+        <div class="fm-label">Screens</div>
+        <div class="fm-val">Blurred — NDA</div>
       </div>
-      <div class="p-step">
-        <span class="p-num">03</span>
-        <div>
-          <div class="p-title">Token-based design system in Figma</div>
-          <p class="p-desc">Semantic token system from scratch using Figma Variables — colors, spacing, typography, states. Separate files for iOS (HIG) and Android (Material 3).</p>
-        </div>
+      <div class="fm-row">
+        <div class="fm-label">Figma</div>
+        <div class="fm-val">Full file available on request</div>
       </div>
-      <div class="p-step">
-        <span class="p-num">04</span>
-        <div>
-          <div class="p-title">All screens · 2 platforms · 2 modes</div>
-          <p class="p-desc">Every screen in light and dark mode for both iOS and Android. Platform conventions respected while keeping visual language consistent.</p>
-        </div>
-      </div>
-      <div class="p-step">
-        <span class="p-num">05</span>
-        <div>
-          <div class="p-title">Paywall, warranty & reminder UX</div>
-          <p class="p-desc">Monetization flow — free trial, annual vs weekly plans. Plus warranty tracker and return window reminders as key differentiators.</p>
-        </div>
+      <div class="fm-row">
+        <div class="fm-label">Font</div>
+        <div class="fm-val">Urbanist (app) · Inter (case study)</div>
       </div>
     </div>
   </div>
-</section>
-
-<!-- DELIVERABLES -->
-<section style="border-bottom:none">
-  <div class="container">
-    <div class="eyebrow">04 · Deliverables</div>
-    <h2>What was<br>delivered.</h2>
-    <div class="results-grid">
-      <div class="result-card">
-        <div class="result-n">2</div>
-        <div class="result-l">Platforms</div>
-        <div class="result-d">Full iOS and Android design following HIG and Material 3 guidelines</div>
-      </div>
-      <div class="result-card">
-        <div class="result-n">2</div>
-        <div class="result-l">Color modes</div>
-        <div class="result-d">Complete light and dark mode — token-based, no hardcoded values</div>
-      </div>
-      <div class="result-card">
-        <div class="result-n">1k+</div>
-        <div class="result-l">Carriers</div>
-        <div class="result-d">Auto-detect carrier from tracking number — no manual selection needed</div>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
 <footer>
-  <div class="container">
-    <p>Anna Izotova · Senior Product Designer · 2026</p>
-    <p>Under NDA — full screens not shown</p>
-  </div>
+  <span class="ft">Anna Izotova · Product Designer · 2026</span>
+  <a class="ft-link" href="index.html">← Back to portfolio</a>
 </footer>
 
 </body>
