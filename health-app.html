@@ -30,8 +30,8 @@
   --accent-mid: #b5d4c0;
 
   /* Status colours from metric tags */
-  --green: #4a8c6a;
-  --green-light: #eaf2ed;
+  --green: var(--text);
+  --green-light: var(--bg2);
   --amber: #c07a3a;
   --amber-light: #fdf2e8;
   --blue: #4a7ab5;
@@ -44,8 +44,8 @@
   --pink-light: #eaf2ed;
   --purple: #4a6e8a;
   --purple-light: #e8f0f5;
-  --teal: #4a8c6a;
-  --teal-light: #eaf2ed;
+  --teal: var(--text);
+  --teal-light: var(--bg2);
 }
 html { scroll-behavior: smooth; }
 body {
@@ -231,6 +231,23 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
   </div>
 </header>
 
+<!-- Opening statement — dark block mirrors the killer insight below -->
+<div style="background:var(--text);padding:52px 48px;">
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:160px 1fr;gap:48px;align-items:start;">
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.1em;line-height:1.6;">The project<br>in one sentence</div>
+    </div>
+    <div>
+      <p style="font-size:20px;color:rgba(255,255,255,0.88);line-height:1.55;font-weight:300;letter-spacing:-0.01em;margin:0 0 20px;">Health data is only useful when you understand what it means. Most apps skip that part.</p>
+      <div style="display:flex;gap:32px;">
+        <div><div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">Platform</div><div style="font-size:12px;color:rgba(255,255,255,0.5);">iOS 26 · iPhone</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">Scope</div><div style="font-size:12px;color:rgba(255,255,255,0.5);">Research → Hi-Fi Prototype</div></div>
+        <div><div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;">Constraint</div><div style="font-size:12px;color:rgba(255,255,255,0.5);">NDA — no brand or product name disclosed</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- 01 ROLE -->
 <section class="section">
   <div class="section-header">
@@ -313,8 +330,8 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
         <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--purple);margin-bottom:8px;">HMW 02</div>
         <div style="font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">...make a daily check-in feel worth doing — not just another thing to fill out?</div>
       </div>
-      <div style="background:var(--teal-light);border:1px solid #8fc8a8;border-radius:10px;padding:18px 20px;">
-        <div style="font-size:11px;font-family:'DM Mono',monospace;color:#4a8c6a;margin-bottom:8px;">HMW 03</div>
+      <div style="background:var(--teal-light);border:1px solid var(--border);border-radius:10px;padding:18px 20px;">
+        <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--text);margin-bottom:8px;">HMW 03</div>
         <div style="font-size:14px;color:var(--text);line-height:1.5;font-weight:500;">...give 16 metrics a structure that surfaces what matters today without hiding the rest?</div>
       </div>
     </div>
@@ -590,7 +607,7 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
     </div>
 
     <div style="border-left:3px solid var(--teal);padding:20px 24px;background:var(--teal-light);border-radius:0 12px 12px 0;">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;color:#4a8c6a;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Finding 03 · Competitors gap — no camera measurement</div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Finding 03 · Competitors gap — no camera measurement</div>
       <p style="margin:0;font-size:14px;color:var(--text);">None of the 15 analysed apps offered <strong>camera-based real-time pulse measurement</strong> without a wearable device. Whoop, Oura, and Fitbit all require hardware. This was identified as the key product differentiator — measure your heart health with just your iPhone, no device needed.</p>
     </div>
 
@@ -655,7 +672,7 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
           <!-- TAB BAR + 5 TABS -->
           <div style="flex:1;min-width:0;">
             <!-- Tab Bar root -->
-            <div style="background:#eaf2ed;border:1.5px solid #b5d4c0;border-radius:8px;padding:10px 20px;text-align:center;display:inline-block;margin-bottom:0;min-width:140px;">
+            <div style="background:var(--bg2);border:1.5px solid #b5d4c0;border-radius:8px;padding:10px 20px;text-align:center;display:inline-block;margin-bottom:0;min-width:140px;">
               <div style="font-family:'DM Mono',monospace;font-size:12px;color:#7da98e;font-weight:bold;">Tab Bar</div>
               <div style="font-family:'DM Mono',monospace;font-size:10px;color:#b5d4c0;margin-top:2px;">5 tabs</div>
             </div>
@@ -675,7 +692,7 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
 
               <!-- Tab 1: Diary/Home -->
               <div>
-                <div style="background:#eaf2ed;border:1.5px solid #b5d4c0;border-radius:7px;padding:9px 10px;text-align:center;margin-bottom:10px;">
+                <div style="background:var(--bg2);border:1.5px solid #b5d4c0;border-radius:7px;padding:9px 10px;text-align:center;margin-bottom:10px;">
                   <div style="font-size:14px;margin-bottom:3px;">📓</div>
                   <div style="font-family:'DM Mono',monospace;font-size:10px;color:#7da98e;font-weight:bold;">Diary / Home</div>
                 </div>
@@ -701,14 +718,14 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
 
               <!-- Tab 3: History -->
               <div>
-                <div style="background:#eaf2ed;border:1.5px solid #8fc8a8;border-radius:7px;padding:9px 10px;text-align:center;margin-bottom:10px;">
+                <div style="background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:9px 10px;text-align:center;margin-bottom:10px;">
                   <div style="font-size:14px;margin-bottom:3px;">📊</div>
-                  <div style="font-family:'DM Mono',monospace;font-size:10px;color:#4a8c6a;font-weight:bold;">History</div>
+                  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text);font-weight:bold;">History</div>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:5px;">
                   <div style="background:#f2f0eb;border:1px solid #dedad2;border-radius:4px;padding:6px 8px;font-family:'DM Mono',monospace;font-size:10px;color:#6a6860;text-align:center;">Pulse log</div>
                   <div style="background:#f2f0eb;border:1px solid #dedad2;border-radius:4px;padding:6px 8px;font-family:'DM Mono',monospace;font-size:10px;color:#6a6860;text-align:center;">Mood log</div>
-                  <div style="background:#f2f8f4;border:1px solid #8fc8a8;border-radius:4px;padding:6px 8px;font-family:'DM Mono',monospace;font-size:10px;color:#4a8c6a;text-align:center;">List · Chart · Calendar</div>
+                  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:6px 8px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text);text-align:center;">List · Chart · Calendar</div>
                 </div>
               </div>
 
@@ -796,9 +813,9 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
 
           <!-- Option C — chosen -->
           <div>
-            <div style="font-family:'DM Mono',monospace;font-size:12px;color:#4a8c6a;margin-bottom:14px;">C · Chosen ✓ · primary + secondary</div>
+            <div style="font-family:'DM Mono',monospace;font-size:12px;color:var(--text);margin-bottom:14px;">C · Chosen ✓ · primary + secondary</div>
             <!-- Primary large card -->
-            <div style="background:#eaf2ed;border:1px solid #b5d4c0;border-radius:10px;padding:20px 22px;margin-bottom:10px;">
+            <div style="background:var(--bg2);border:1px solid #b5d4c0;border-radius:10px;padding:20px 22px;margin-bottom:10px;">
               <div style="font-size:11px;color:#7da98e;font-family:'DM Mono',monospace;margin-bottom:6px;">♥ Pulse · primary metric</div>
               <div style="font-size:32px;color:#1c1b18;font-weight:300;line-height:1;">72 <span style="font-size:14px;color:#aaa;font-weight:400;">BPM</span></div>
               <div style="font-size:11px;color:#aaa;font-family:'DM Mono',monospace;margin-top:6px;">Normal: 60–100</div>
@@ -818,7 +835,7 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
                 </div>
               </div>
             </div>
-            <div style="margin-top:16px;font-family:'DM Mono',monospace;font-size:11px;color:#4a8c6a;">✓ 1 primary large + 2 secondary small</div>
+            <div style="margin-top:16px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text);">✓ 1 primary large + 2 secondary small</div>
             <div style="font-family:'DM Mono',monospace;font-size:11px;color:#aaa;margin-top:4px;">Priority + context without hiding data</div>
           </div>
 
@@ -861,7 +878,7 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
           <text x="75" y="222" font-family="monospace" font-size="6" fill="#aaa" text-anchor="middle">low engagement</text>
 
           <!-- DARK THEME mock -->
-          <text x="170" y="40" font-family="monospace" font-size="8" fill="#4a8c6a">Dark theme ✓  +34% preference</text>
+          <text x="170" y="40" font-family="monospace" font-size="8" fill="#888">Dark theme ✓  +34% preference</text>
           <rect x="170" y="46" width="110" height="180" rx="12" fill="#1a1025" stroke="#3a2050" stroke-width="1"/>
           <!-- gradient glow -->
           <ellipse cx="225" cy="80" rx="55" ry="40" fill="#7da98e" opacity="0.12"/>
@@ -883,7 +900,7 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
           <rect x="180" y="154" width="90" height="20" rx="6" fill="#7da98e"/>
           <text x="225" y="167" font-family="monospace" font-size="6" fill="white" text-anchor="middle">Take measurement</text>
           <!-- result label -->
-          <text x="225" y="200" font-family="monospace" font-size="7" fill="#4a8c6a" text-anchor="middle">✓ premium · personal</text>
+          <text x="225" y="200" font-family="monospace" font-size="7" fill="#888" text-anchor="middle">✓ premium · personal</text>
           <text x="225" y="212" font-family="monospace" font-size="6" fill="#aaa" text-anchor="middle">warm · trustworthy</text>
           <text x="225" y="222" font-family="monospace" font-size="6" fill="#aaa" text-anchor="middle">reduced anxiety</text>
 
@@ -1105,6 +1122,18 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
   </div>
 </section>
 
+<!-- MIDDLE DARK BLOCK — between decisions and conflict -->
+<div style="background:var(--text);padding:52px 48px;">
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:160px 1fr;gap:48px;align-items:start;">
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.1em;line-height:1.6;">On making<br>hard calls</div>
+    </div>
+    <div>
+      <p style="font-size:20px;color:rgba(255,255,255,0.88);line-height:1.55;font-weight:300;letter-spacing:-0.01em;margin:0;">Every decision in this project had someone who disagreed with it. The ones that held up in testing stayed. The ones that didn't — didn't.</p>
+    </div>
+  </div>
+</div>
+
 <!-- CONFLICT -->
 <section class="section">
   <div class="section-header">
@@ -1119,7 +1148,7 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
       <p style="font-size:14px;color:var(--text2);margin:0;line-height:1.65;">Heart Age is a calculated metric — it needs more explanation, more context, more trust-building before the user cares about it. Show it later, once they're invested in the app.</p>
     </div>
     <div style="background:var(--accent-light);border:1px solid var(--accent-mid);border-radius:12px;padding:28px;">
-      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">My argument</div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">My argument</div>
       <p style="font-size:14px;color:var(--text2);margin:0;line-height:1.65;">It's the only thing in this app that no competitor offers. If it's buried, we've designed around our own differentiator. The banner format lets it exist on Home without dominating — it's visible but not blocking.</p>
     </div>
   </div>
@@ -1145,11 +1174,11 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
       <div style="color:#fff;font-size:28px;font-weight:300;margin-bottom:8px;">72 BPM</div>
       <div style="color:rgba(255,255,255,0.55);font-size:13px;margin-bottom:16px;">Normal: 60–100</div>
       <div style="display:flex;gap:8px;align-items:center;">
-        <div style="background:#4a8c6a;border-radius:4px;padding:3px 8px;font-family:'DM Mono',monospace;font-size:10px;color:#fff;">AAA · 12.4:1</div>
+        <div style="background:var(--text);border-radius:4px;padding:3px 8px;font-family:'DM Mono',monospace;font-size:10px;color:#fff;">AAA · 12.4:1</div>
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.4);">primary text</div>
       </div>
       <div style="display:flex;gap:8px;align-items:center;margin-top:6px;">
-        <div style="background:#4a8c6a;border-radius:4px;padding:3px 8px;font-family:'DM Mono',monospace;font-size:10px;color:#fff;">AA · 5.2:1</div>
+        <div style="background:var(--text);border-radius:4px;padding:3px 8px;font-family:'DM Mono',monospace;font-size:10px;color:#fff;">AA · 5.2:1</div>
         <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.4);">secondary text</div>
       </div>
     </div>
@@ -1188,14 +1217,23 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
     <p style="font-size:14px;color:var(--text);margin:0;line-height:1.7;">The original Mood Tracker used small circular emoji buttons — visually clean, 36pt tap area. In testing with participants over 45, two people missed the tap twice. I enlarged them to 56pt and added a subtle selection state. The visual elegance suffered slightly. The usability didn't. That trade-off was easy to make once I saw it happen in front of me.</p>
   </div>
 </section>
+
+<!-- KILLER INSIGHT — full width dark block outside section -->
+<div style="background:var(--text);padding:52px 48px;margin:0 -0px;">
+  <div style="display:grid;grid-template-columns:160px 1fr;gap:48px;align-items:start;max-width:900px;margin:0 auto;">
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.1em;line-height:1.6;">The insight that<br>changed everything</div>
+    </div>
+    <div>
+      <p style="font-size:20px;color:rgba(255,255,255,0.88);line-height:1.55;font-weight:300;letter-spacing:-0.01em;margin:0;">Users didn't need more features.<br>They needed fewer decisions.</p>
+    </div>
+  </div>
+</div>
+
 <section class="section">
   <div class="section-header">
     <span class="section-num">↗</span>
     <h2>The thing that changed the direction</h2>
-  </div>
-
-  <div style="background:var(--text);border-radius:14px;padding:36px 40px;margin-bottom:32px;">
-    <p style="font-size:22px;color:var(--bg);line-height:1.5;font-weight:300;letter-spacing:-0.01em;margin:0;">Users didn't need more features.<br>They needed fewer decisions.</p>
   </div>
 
   <p>This came from round 1 testing. I was watching someone use the V1 prototype — they had everything they asked for in research, but they kept hesitating. Not because they were confused about the UI. Because every screen was asking them to decide something.</p>
@@ -1263,14 +1301,14 @@ footer { max-width: 900px; margin: 0 auto; padding: 48px 48px 80px; display: fle
       <!-- Arrow -->
       <div style="text-align:center;font-size:24px;color:var(--border);">→</div>
       <!-- After -->
-      <div style="background:#fff;border:1.5px solid #8fc8a8;border-radius:12px;padding:28px;">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:#4a8c6a;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;">After redesign · final hi-fi prototype</div>
-        <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:48px;color:#4a8c6a;line-height:1;margin-bottom:8px;">3<span style="font-size:20px;color:var(--text3);font-family:'Inter',sans-serif;"> min</span></div>
-        <div style="font-size:13px;color:var(--text2);margin-bottom:16px;">Average task completion time <strong style="color:#4a8c6a;">−63%</strong></div>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;">After redesign · final hi-fi prototype</div>
+        <div style="font-family:'NHG Display','SF Pro Display',-apple-system,'Inter',sans-serif;font-size:48px;color:var(--text);line-height:1;margin-bottom:8px;">3<span style="font-size:20px;color:var(--text3);font-family:'Inter',sans-serif;"> min</span></div>
+        <div style="font-size:13px;color:var(--text2);margin-bottom:16px;">Average task completion time <strong style="color:var(--text);">−63%</strong></div>
         <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="font-size:13px;color:var(--text2);display:flex;align-items:flex-start;gap:8px;"><span style="color:#4a8c6a;font-weight:bold;flex-shrink:0;">✓</span> Tab bar icons + labels — 11/12 found History on first tap</div>
-          <div style="font-size:13px;color:var(--text2);display:flex;align-items:flex-start;gap:8px;"><span style="color:#4a8c6a;font-weight:bold;flex-shrink:0;">✓</span> Emoji mood tracker — 91% completion, no explanation needed</div>
-          <div style="font-size:13px;color:var(--text2);display:flex;align-items:flex-start;gap:8px;"><span style="color:#4a8c6a;font-weight:bold;flex-shrink:0;">✓</span> "Normal: 60–100" on each card — 0 participants asked for context</div>
+          <div style="font-size:13px;color:var(--text2);display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--text);font-weight:bold;flex-shrink:0;">✓</span> Tab bar icons + labels — 11/12 found History on first tap</div>
+          <div style="font-size:13px;color:var(--text2);display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--text);font-weight:bold;flex-shrink:0;">✓</span> Emoji mood tracker — 91% completion, no explanation needed</div>
+          <div style="font-size:13px;color:var(--text2);display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--text);font-weight:bold;flex-shrink:0;">✓</span> "Normal: 60–100" on each card — 0 participants asked for context</div>
         </div>
       </div>
     </div>
